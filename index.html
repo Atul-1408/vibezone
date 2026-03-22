@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>VibeZone v5 🌈 — by Atul Thakur</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --n1:#ff006e;--n2:#8338ec;--n3:#3a86ff;--n4:#06ffa5;--n5:#ffbe0b;--n6:#fb5607;
+  --bg:#050510;--card:#0d0d2b;--card2:#12123a;--border:rgba(255,255,255,0.07);
+  --text:#ffffff;--sub:rgba(255,255,255,0.5);--r:16px;
+  --g1:rgba(255,0,110,.35);--g2:rgba(131,56,236,.35);--g3:rgba(58,134,255,.35);--g4:rgba(6,255,165,.35);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(58,134,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(58,134,255,.03) 1px,transparent 1px);background-size:44px 44px;}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;animation:orbF linear infinite;}
+@keyframes orbF{0%{transform:translate(0,0)}33%{transform:translate(25px,-35px)}66%{transform:translate(-15px,20px)}100%{transform:translate(0,0)}}
+ 
+/* SPLASH */
+#splash{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+#splash.out{animation:splashOut .6s ease forwards;}
+@keyframes splashOut{to{opacity:0;pointer-events:none;}}
+.sp-logo{font-family:'Fredoka One',cursive;font-size:4rem;background:linear-gradient(135deg,var(--n1),var(--n2),var(--n3),var(--n4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:popIn .8s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.sp-sub{font-weight:800;color:var(--sub);font-size:.95rem;animation:fadeUp .5s .4s both;}
+.sp-bar{width:180px;height:3px;background:rgba(255,255,255,.1);border-radius:50px;overflow:hidden;margin-top:24px;animation:fadeUp .4s .6s both;}
+.sp-fill{height:100%;background:linear-gradient(90deg,var(--n1),var(--n3),var(--n4));animation:fill2s 2s .7s forwards;width:0;}
+@keyframes fill2s{to{width:100%}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sp-tip{font-size:.75rem;color:var(--sub);animation:fadeUp .4s .9s both;}
+ 
+/* CONFETTI */
+.cp{position:fixed;top:-16px;border-radius:2px;animation:cfFall linear forwards;z-index:9998;pointer-events:none;}
+@keyframes cfFall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
+ 
+/* NAV */
+nav{position:sticky;top:0;z-index:300;background:rgba(5,5,16,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);padding:9px 12px;display:flex;align-items:center;gap:8px;}
+.logo{font-family:'Fredoka One',cursive;font-size:1.35rem;background:linear-gradient(90deg,var(--n1),var(--n2),var(--n3),var(--n4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200%;animation:rb 4s linear infinite;white-space:nowrap;flex-shrink:0;}
+@keyframes rb{0%{background-position:0%}100%{background-position:200%}}
+.navs{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none;}
+.navs::-webkit-scrollbar{display:none;}
+.nt{padding:6px 11px;border-radius:50px;border:1px solid transparent;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:.7rem;background:rgba(255,255,255,.05);color:var(--sub);transition:all .18s;white-space:nowrap;flex-shrink:0;}
+.nt.active{background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;box-shadow:0 0 12px var(--g1);}
+.nt:not(.active):hover{border-color:rgba(255,255,255,.12);color:var(--text);}
+ 
+/* SECTIONS */
+.sec{display:none;position:relative;z-index:1;padding:12px;max-width:880px;margin:0 auto;}
+.sec.active{display:block;animation:si .3s ease;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.stitle{font-family:'Fredoka One',cursive;font-size:1.5rem;text-align:center;margin-bottom:14px;background:linear-gradient(135deg,var(--n1),var(--n2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+ 
+/* BASE CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px;}
+.card2{background:var(--card2);}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;}
+ 
+/* BUTTONS */
+.btn{padding:8px 18px;border-radius:50px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:.82rem;transition:all .18s;}
+.bp{background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;}
+.bp:hover{transform:translateY(-2px);box-shadow:0 4px 18px var(--g1);}
+.bs{background:rgba(255,255,255,.08);color:var(--text);border:1px solid rgba(255,255,255,.1);}
+.bs:hover{background:rgba(255,255,255,.14);}
+.bg{background:linear-gradient(135deg,var(--n4),var(--n3));color:#050510;}
+.bg:hover{transform:translateY(-2px);box-shadow:0 4px 18px var(--g4);}
+.back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);color:var(--sub);padding:5px 13px;border-radius:50px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;margin-bottom:11px;font-size:.75rem;transition:all .18s;}
+.back:hover{color:var(--text);}
+ 
+/* HOME */
+.hero{text-align:center;padding:18px 8px 12px;}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(1.9rem,7vw,3.2rem);line-height:1.1;background:linear-gradient(135deg,var(--n5),var(--n1),var(--n2),var(--n3),var(--n4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:300%;animation:rb 5s linear infinite;filter:drop-shadow(0 0 24px rgba(131,56,236,.4));}
+.sr{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+.sp{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:5px 12px;font-weight:800;font-size:.74rem;}
+.xpw{width:90px;height:3px;background:rgba(255,255,255,.08);border-radius:50px;overflow:hidden;}
+.xpb{height:100%;background:linear-gradient(90deg,var(--n5),var(--n1));border-radius:50px;transition:width .5s cubic-bezier(.34,1.56,.64,1);}
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 9px;text-align:center;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.qcard::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--c1),var(--c2));opacity:0;transition:opacity .25s;}
+.qcard:hover::after{opacity:.12;}
+.qcard:hover{transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,0,0,.35);}
+.qcard:active{transform:scale(.96);}
+.qi{font-size:1.8rem;display:block;margin-bottom:4px;position:relative;z-index:1;}
+.ql{font-weight:800;font-size:.72rem;position:relative;z-index:1;color:var(--sub);}
+ 
+/* QUOTE BOX */
+.qtbox{background:linear-gradient(135deg,rgba(255,0,110,.07),rgba(131,56,236,.07));border:1px solid rgba(255,0,110,.18);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;text-align:center;position:relative;overflow:hidden;}
+.qtbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--n1),var(--n2),var(--n3),var(--n4));background-size:200%;animation:rb 3s linear infinite;}
+.qtt{font-family:'Fredoka One',cursive;font-size:.95rem;background:linear-gradient(135deg,var(--n5),var(--n1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.4;min-height:44px;display:flex;align-items:center;justify-content:center;}
+.qta{font-size:.68rem;color:var(--sub);margin-top:4px;}
+ 
+/* MOOD */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:7px;margin-bottom:12px;}
+.mb{background:var(--card);border:2px solid transparent;border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;transition:all .18s;}
+.mb:hover{border-color:var(--n1);transform:scale(1.04);}
+.mb.sel{border-color:var(--n4);box-shadow:0 0 12px var(--g4);}
+.me2{font-size:1.6rem;display:block;}
+.mn2{font-size:.62rem;font-weight:700;margin-top:2px;color:var(--sub);}
+.cbar{height:120px;display:flex;align-items:flex-end;gap:5px;padding:8px 0 0;}
+.cbc{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;}
+.cbr{width:100%;border-radius:5px 5px 0 0;min-height:4px;transition:height .5s cubic-bezier(.34,1.56,.64,1);}
+.cbl{font-size:.58rem;color:var(--sub);font-weight:700;}
+ 
+/* HABIT TRACKER */
+.habit-item{display:flex;align-items:center;gap:10px;padding:11px;background:var(--card2);border-radius:12px;margin-bottom:7px;border:1px solid var(--border);transition:all .2s;}
+.habit-item.done{border-color:var(--n4);box-shadow:0 0 10px rgba(6,255,165,.15);}
+.habit-check{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .2s;flex-shrink:0;}
+.habit-item.done .habit-check{background:var(--n4);border-color:var(--n4);}
+.habit-name{flex:1;font-weight:700;font-size:.85rem;}
+.habit-streak{font-family:'Fredoka One',cursive;font-size:.85rem;color:var(--n5);}
+.add-habit-inp{background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:50px;padding:9px 16px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;outline:none;flex:1;}
+.add-habit-inp:focus{border-color:var(--n2);box-shadow:0 0 10px var(--g2);}
+ 
+/* SLEEP TRACKER */
+.sleep-ring{width:140px;height:140px;margin:0 auto 12px;position:relative;}
+.sleep-ring svg{transform:rotate(-90deg);}
+.st{fill:none;stroke:rgba(255,255,255,.07);stroke-width:10;}
+.sf{fill:none;stroke:url(#sg);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .8s ease;}
+#sleep-hrs{font-family:'Fredoka One',cursive;font-size:2.4rem;text-align:center;color:var(--n3);text-shadow:0 0 16px var(--g3);}
+.sleep-log-item{display:flex;align-items:center;gap:10px;padding:9px;background:var(--card2);border-radius:10px;margin-bottom:6px;font-size:.82rem;}
+.sleep-bar{height:8px;border-radius:50px;background:linear-gradient(90deg,var(--n3),var(--n2));flex:1;position:relative;overflow:hidden;}
+.sleep-bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--n3),var(--n4));transition:width .5s ease;}
+ 
+/* FITNESS */
+.step-ring{width:160px;height:160px;margin:0 auto;position:relative;cursor:pointer;}
+.step-ring svg{transform:rotate(-90deg);}
+.step-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:12;}
+.step-prog{fill:none;stroke:url(#fitg);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .4s ease;}
+#step-num{font-family:'Fredoka One',cursive;font-size:2rem;text-align:center;color:var(--n4);text-shadow:0 0 16px var(--g4);}
+.workout-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--card2);border-radius:10px;margin-bottom:6px;border:1px solid var(--border);}
+ 
+/* REMINDERS */
+.rem-item{display:flex;align-items:center;gap:10px;padding:11px;background:var(--card2);border-radius:12px;margin-bottom:7px;border:1px solid var(--border);}
+.rem-item.active{border-color:var(--n5);box-shadow:0 0 8px rgba(255,190,11,.15);}
+.rem-time{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--n5);min-width:48px;}
+.rem-toggle{width:36px;height:20px;border-radius:50px;background:var(--border);cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;border:none;}
+.rem-toggle.on{background:var(--n4);}
+.rem-toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .2s;}
+.rem-toggle.on::after{left:19px;}
+ 
+/* COMMUNITY WALL */
+.wall-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.wcard{background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--border);transition:all .2s;}
+.wcard:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.14);}
+.wcard img{width:100%;display:block;}
+.winfo{padding:8px;}
+.wmood{font-size:.78rem;font-weight:700;}
+.wtime{font-size:.65rem;color:var(--sub);}
+.wlike{background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--sub);transition:all .2s;padding:2px 6px;}
+.wlike:hover{color:var(--n1);}
+ 
+/* CHAT */
+.chat-wrap{height:380px;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.chat-wrap::-webkit-scrollbar{width:4px;}
+.chat-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:50px;}
+.msg{max-width:78%;padding:9px 13px;border-radius:14px;font-size:.84rem;line-height:1.5;animation:msgIn .25s ease;}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.msg.me{background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;margin-left:auto;border-bottom-right-radius:4px;}
+.msg.them{background:var(--card2);border:1px solid var(--border);margin-right:auto;border-bottom-left-radius:4px;}
+.msg-sender{font-size:.65rem;font-weight:800;color:var(--sub);margin-bottom:3px;}
+.msg-time{font-size:.6rem;color:rgba(255,255,255,.4);margin-top:3px;text-align:right;}
+.chat-inp-row{display:flex;gap:7px;margin-top:8px;}
+.chat-inp{flex:1;background:var(--card2);border:1px solid var(--border);border-radius:50px;padding:9px 16px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:700;font-size:.84rem;outline:none;}
+.chat-inp:focus{border-color:var(--n2);box-shadow:0 0 10px var(--g2);}
+.friend-row{display:flex;align-items:center;gap:10px;padding:10px;background:var(--card2);border-radius:12px;margin-bottom:7px;cursor:pointer;border:1px solid var(--border);transition:all .2s;}
+.friend-row:hover{border-color:rgba(255,255,255,.14);}
+.friend-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--n1),var(--n2));display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.online-dot{width:9px;height:9px;border-radius:50%;background:var(--n4);box-shadow:0 0 6px var(--g4);flex-shrink:0;}
+ 
+/* LEADERBOARD */
+.lb-row{display:flex;align-items:center;gap:10px;padding:11px;background:var(--card2);border-radius:12px;margin-bottom:7px;border:1px solid var(--border);transition:all .2s;}
+.lb-row:hover{border-color:rgba(255,255,255,.12);}
+.lb-row.me-row{border-color:var(--n4);box-shadow:0 0 10px rgba(6,255,165,.15);}
+.lb-rank{font-family:'Fredoka One',cursive;font-size:1.3rem;width:34px;text-align:center;}
+.lb-av{font-size:1.5rem;}
+.lb-name{flex:1;font-weight:800;font-size:.88rem;}
+.lb-pts{font-family:'Fredoka One',cursive;font-size:1rem;color:var(--n5);}
+.lb-badge{font-size:.75rem;}
+ 
+/* GAMES */
+.gcard2{background:var(--card);border-radius:var(--r);padding:14px 10px;text-align:center;cursor:pointer;border:1px solid var(--border);transition:all .2s;position:relative;overflow:hidden;}
+.gcard2::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gc,var(--n2));opacity:0;transition:opacity .25s;}
+.gcard2:hover{transform:translateY(-3px);}
+.gcard2:hover::after{opacity:1;}
+.gi2{font-size:2.1rem;display:block;margin-bottom:5px;}
+.gn2{font-family:'Fredoka One',cursive;font-size:.86rem;}
+.gd2{font-size:.62rem;color:var(--sub);margin-top:1px;}
+.game-area{display:none;background:var(--card);border-radius:var(--r);padding:16px;}
+.game-area.active{display:block;animation:si .3s ease;}
+.sbar{display:flex;justify-content:space-between;align-items:center;background:var(--card2);border-radius:50px;padding:6px 13px;margin-bottom:11px;font-weight:700;font-size:.8rem;border:1px solid var(--border);}
+.sv{font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--n5);}
+ 
+/* BUBBLE */
+#ba{position:relative;height:280px;background:linear-gradient(180deg,#0a0520,var(--bg));border-radius:12px;overflow:hidden;user-select:none;}
+.bub{position:absolute;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;animation:fup linear forwards;}
+@keyframes fup{from{transform:translateY(0);opacity:1}to{transform:translateY(-350px);opacity:.1}}
+.popa{animation:popp .3s forwards!important;pointer-events:none;}
+@keyframes popp{0%{transform:scale(1)}55%{transform:scale(1.8)}100%{transform:scale(0);opacity:0}}
+ 
+/* MEMORY */
+.mgrd{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:290px;margin:0 auto;}
+.mc2{aspect-ratio:1;border-radius:8px;cursor:pointer;position:relative;}
+.mf2,.mbk{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:1.4rem;transition:opacity .2s;}
+.mbk{background:linear-gradient(135deg,var(--n2),var(--n1));}
+.mf2{opacity:0;background:var(--card2);}
+.mc2.flip .mf2,.mc2.mat .mf2{opacity:1;}
+.mc2.flip .mbk,.mc2.mat .mbk{opacity:0;}
+.mc2.mat .mf2{background:linear-gradient(135deg,var(--n4),var(--n3));box-shadow:0 0 8px var(--g4);}
+ 
+/* BREATHE */
+#bc2{width:140px;height:140px;border-radius:50%;margin:10px auto;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;text-align:center;transition:transform 4s ease-in-out,background 2s,box-shadow 2s;background:radial-gradient(circle,var(--n3),var(--n2));box-shadow:0 0 36px var(--g3);}
+ 
+/* WORD */
+#wdsp{font-family:'Fredoka One',cursive;font-size:1.9rem;letter-spacing:9px;text-align:center;margin:9px 0;color:var(--n5);min-height:44px;}
+.lgrd{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:9px 0;}
+.lbtn2{width:32px;height:32px;border-radius:7px;border:1px solid rgba(255,255,255,.1);background:var(--card2);color:var(--text);font-family:'Fredoka One',cursive;font-size:.85rem;cursor:pointer;transition:all .15s;}
+.lbtn2:hover:not(:disabled){background:var(--n2);border-color:var(--n2);}
+.lbtn2:disabled{opacity:.2;cursor:not-allowed;}
+ 
+/* SNAKE / DINO */
+#snc{display:block;margin:0 auto;border-radius:10px;background:#050510;max-width:100%;}
+#dinoc{display:block;margin:0 auto;border-radius:10px;background:linear-gradient(180deg,#0a1628,#050510);max-width:100%;}
+ 
+/* FLAPPY */
+#flapc{display:block;margin:0 auto;border-radius:10px;max-width:100%;cursor:pointer;}
+ 
+/* CLICKER */
+#cb2{width:120px;height:120px;border-radius:50%;border:3px solid var(--n5);font-size:2.4rem;cursor:pointer;margin:10px auto;display:block;background:radial-gradient(circle,rgba(255,190,11,.12),transparent);box-shadow:0 0 26px rgba(255,190,11,.2);transition:all .1s;}
+#cb2:active{transform:scale(.88);box-shadow:0 0 44px rgba(255,190,11,.5);}
+.upgs{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:9px;}
+.ub2{padding:5px 10px;border-radius:50px;border:1px solid var(--n6);background:rgba(251,86,7,.1);color:var(--n6);font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;font-size:.7rem;transition:all .2s;}
+.ub2:hover{background:var(--n6);color:#fff;}
+.ub2:disabled{opacity:.3;}
+ 
+/* DOODLE */
+#dc{width:100%;display:block;border-radius:var(--r);cursor:crosshair;touch-action:none;}
+.canvas-wrap{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:0 0 26px rgba(131,56,236,.25);}
+.tlbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:9px;padding:9px 11px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);}
+.cdot{width:21px;height:21px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .18s;flex-shrink:0;}
+.cdot:hover,.cdot.act{border-color:#fff;transform:scale(1.3);}
+.tbtn2{padding:4px 9px;border-radius:50px;border:1px solid rgba(255,255,255,.09);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.7rem;background:rgba(255,255,255,.05);color:var(--text);transition:all .18s;}
+.tbtn2:hover,.tbtn2.act{background:var(--n1);border-color:var(--n1);}
+ 
+/* SOUNDS */
+.scard2{background:var(--card);border-radius:var(--r);padding:13px;text-align:center;cursor:pointer;border:1px solid var(--border);transition:all .2s;}
+.scard2:hover{transform:translateY(-2px);}
+.scard2.on{border-color:var(--n4);box-shadow:0 0 14px var(--g4);}
+.scard2 .si2{font-size:1.9rem;display:block;margin-bottom:4px;}
+.scard2 .sn2{font-weight:800;font-size:.75rem;}
+.scard2 .ss2{font-size:.62rem;color:var(--sub);margin-top:1px;}
+.scard2.on .ss2{color:var(--n4);}
+ 
+/* POMODORO */
+.pring{width:140px;height:140px;margin:0 auto 10px;position:relative;}
+.pring svg{transform:rotate(-90deg);}
+.pt2{fill:none;stroke:rgba(255,255,255,.06);stroke-width:10;}
+.pp2{fill:none;stroke:url(#pg2);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .9s linear;}
+#pd2{font-family:'Fredoka One',cursive;font-size:2.6rem;text-align:center;color:var(--n5);}
+ 
+/* BADGES */
+.bdg{display:inline-flex;flex-direction:column;align-items:center;gap:3px;padding:10px 7px;background:var(--card2);border-radius:11px;border:1px solid var(--border);text-align:center;min-width:72px;transition:all .2s;}
+.bdg.earn{border-color:var(--n5);box-shadow:0 0 12px rgba(255,190,11,.25);}
+.bdg .bi{font-size:1.7rem;filter:grayscale(1) opacity(.25);}
+.bdg.earn .bi{filter:none;}
+.bdg .bn{font-size:.58rem;font-weight:800;color:var(--sub);}
+.bdg.earn .bn{color:var(--n5);}
+ 
+/* TOAST */
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%) translateY(120px);background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;padding:8px 18px;border-radius:50px;font-weight:800;font-size:.8rem;z-index:9000;transition:transform .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis;box-shadow:0 0 18px var(--g1);}
+#toast.show{transform:translateX(-50%) translateY(0);}
+ 
+input[type=range]{accent-color:var(--n1);}
+input[type=time],input[type=number]{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:7px 10px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;outline:none;}
+input[type=time]:focus,input[type=number]:focus{border-color:var(--n2);}
+select{background:var(--card2);color:var(--text);border:1px solid var(--border);border-radius:50px;padding:6px 10px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.78rem;}
+ 
+@media(max-width:480px){#wdsp{font-size:1.4rem;letter-spacing:5px;}.mgrd{gap:4px;}}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="orb" style="width:280px;height:280px;top:8%;left:3%;background:rgba(255,0,110,.1);animation-duration:18s;"></div>
+<div class="orb" style="width:240px;height:240px;top:55%;left:65%;background:rgba(131,56,236,.09);animation-duration:22s;"></div>
+<div class="orb" style="width:200px;height:200px;top:30%;left:40%;background:rgba(58,134,255,.07);animation-duration:16s;"></div>
+ 
+<!-- SPLASH -->
+<div id="splash">
+  <div class="sp-logo">🌈 VibeZone</div>
+  <div class="sp-sub">by Atul Thakur · v5.0</div>
+  <div class="sp-bar"><div class="sp-fill"></div></div>
+  <div class="sp-tip">Loading your happy place... 🔥</div>
+</div>
+ 
+<div id="cfwrap"></div>
+ 
+<nav>
+  <div class="logo">🌈 VZ</div>
+  <div class="navs">
+    <button class="nt active" onclick="S('home')">🏠</button>
+    <button class="nt" onclick="S('profile')">👤</button>
+    <button class="nt" onclick="S('mood')">😊</button>
+    <button class="nt" onclick="S('habits')">📅</button>
+    <button class="nt" onclick="S('sleep')">🌙</button>
+    <button class="nt" onclick="S('fitness')">💪</button>
+    <button class="nt" onclick="S('reminders')">🔔</button>
+    <button class="nt" onclick="S('doodle')">🎨</button>
+    <button class="nt" onclick="S('sounds')">🎵</button>
+    <button class="nt" onclick="S('games')">🎮</button>
+    <button class="nt" onclick="S('pomo')">⏱</button>
+    <button class="nt" onclick="S('community')">🌍</button>
+    <button class="nt" onclick="S('chat')">💬</button>
+    <button class="nt" onclick="S('leaderboard')">🏆</button>
+    <button class="nt" onclick="S('future')">🚀</button>
+  </div>
+</nav>
+ 
+<!-- ═══ HOME ═══ -->
+<div id="home" class="sec active">
+  <div class="hero">
+    <h1>VibeZone 🌈</h1>
+    <p id="greet" style="color:var(--sub);font-size:.88rem;margin-bottom:12px;">Hey Atul! Stress ka koi chance nahi 🔥</p>
+  </div>
+  <div class="sr">
+    <div class="sp">🔥 <span id="strkV" style="font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--n5);">0</span>d streak</div>
+    <div class="sp">⭐ Lv<span id="lvlV" style="font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--n5);margin:0 3px;">1</span>
+      <div class="xpw"><div class="xpb" id="xpB" style="width:0%"></div></div>
+    </div>
+    <div class="sp">🏅 <span id="bdgCnt" style="font-family:'Fredoka One',cursive;font-size:.95rem;color:var(--n5);">0</span></div>
+  </div>
+  <div class="qtbox"><div class="qtt" id="qtT"></div><div class="qta" id="qtA"></div><button class="btn bs" onclick="nxtQ()" style="margin-top:7px;font-size:.7rem;padding:4px 13px;">🔄 New</button></div>
+  <div class="g2" id="hGrid"></div>
+</div>
+ 
+<!-- ═══ PROFILE ═══ -->
+<div id="profile" class="sec">
+  <div class="stitle">Your Profile 👤</div>
+  <div class="card" style="text-align:center;margin-bottom:11px;">
+    <div id="avRing" style="width:72px;height:72px;border-radius:50%;border:3px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,var(--n1),var(--n2),var(--n3)) border-box;display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 9px;cursor:pointer;" onclick="toggleAvPick()">
+      <span id="avEmoji">😎</span>
+    </div>
+    <input id="nmInp" type="text" value="Atul Thakur" oninput="updateName()" style="background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:50px;padding:8px 16px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:700;font-size:.88rem;outline:none;text-align:center;width:190px;margin-bottom:10px;">
+    <div id="avPick" style="display:none;margin-bottom:10px;"><div style="display:flex;flex-wrap:wrap;gap:7px;justify-content:center;" id="avOpts"></div></div>
+    <div class="sr" style="justify-content:center;">
+      <div class="sp">Level <span id="pLv" style="font-family:'Fredoka One',cursive;color:var(--n5);">1</span></div>
+      <div class="sp">XP <span id="pXP" style="font-family:'Fredoka One',cursive;color:var(--n5);">0</span></div>
+      <div class="sp">🔥 <span id="pSt" style="font-family:'Fredoka One',cursive;color:var(--n5);">0</span>d</div>
+    </div>
+  </div>
+  <div style="font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:9px;color:var(--n5);">🏅 Badges</div>
+  <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;" id="bdgGrid"></div>
+  <div style="font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:9px;color:var(--n3);">🌈 Theme</div>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;" id="thGrid"></div>
+</div>
+ 
+<!-- ═══ MOOD ═══ -->
+<div id="mood" class="sec">
+  <div class="stitle">How are you feeling? 💭</div>
+  <div class="mgrid" id="mGrid"></div>
+  <div class="card" style="margin-bottom:10px;">
+    <div style="font-weight:800;font-size:.82rem;margin-bottom:8px;color:var(--n5);">📈 Mood Chart</div>
+    <div class="cbar" id="mChart"></div>
+  </div>
+  <div class="card">
+    <div style="font-family:'Fredoka One',cursive;margin-bottom:8px;color:var(--n5);">📅 History</div>
+    <div id="mLog"><p style="color:var(--sub);text-align:center;padding:10px;font-size:.8rem;">Pick a mood 👆</p></div>
+  </div>
+</div>
+ 
+<!-- ═══ HABIT TRACKER ═══ -->
+<div id="habits" class="sec">
+  <div class="stitle">📅 Daily Habits</div>
+  <div class="card" style="margin-bottom:11px;">
+    <div style="display:flex;gap:7px;margin-bottom:11px;">
+      <input class="add-habit-inp" id="hInp" type="text" placeholder="Add a new habit..." maxlength="30">
+      <select id="hEmoji" style="border-radius:10px;padding:7px;">
+        <option>💧</option><option>🏃</option><option>📚</option><option>🧘</option>
+        <option>😴</option><option>🥗</option><option>💊</option><option>✍️</option>
+      </select>
+      <button class="btn bp" onclick="addHabit()" style="padding:7px 14px;">+</button>
+    </div>
+    <div id="habitList"></div>
+  </div>
+  <div class="card">
+    <div style="font-family:'Fredoka One',cursive;margin-bottom:8px;color:var(--n5);">📊 Today's Progress</div>
+    <div id="habitProgress" style="height:8px;background:rgba(255,255,255,.07);border-radius:50px;overflow:hidden;margin-bottom:6px;">
+      <div id="habitBar" style="height:100%;background:linear-gradient(90deg,var(--n4),var(--n3));border-radius:50px;width:0%;transition:width .5s ease;"></div>
+    </div>
+    <div id="habitStat" style="font-size:.78rem;color:var(--sub);text-align:center;">0 of 0 habits done</div>
+  </div>
+</div>
+ 
+<!-- ═══ SLEEP TRACKER ═══ -->
+<div id="sleep" class="sec">
+  <div class="stitle">🌙 Sleep Tracker</div>
+  <div class="card" style="text-align:center;margin-bottom:11px;">
+    <svg style="position:absolute;width:0;height:0;"><defs><linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:var(--n3)"/><stop offset="100%" style="stop-color:var(--n2)"/></linearGradient></defs></svg>
+    <div class="sleep-ring">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle class="st" cx="70" cy="70" r="58"/>
+        <circle class="sf" id="sRing" cx="70" cy="70" r="58" stroke-dasharray="364" stroke-dashoffset="364"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+        <div id="sleep-hrs">0h</div>
+        <div style="font-size:.65rem;color:var(--sub);font-weight:700;">last night</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:10px;">
+      <label style="font-size:.8rem;font-weight:700;color:var(--sub);">Bed 🛏</label>
+      <input type="time" id="bedT" value="23:00">
+      <label style="font-size:.8rem;font-weight:700;color:var(--sub);">Wake ☀️</label>
+      <input type="time" id="wakeT" value="07:00">
+    </div>
+    <div style="display:flex;gap:7px;justify-content:center;margin-bottom:10px;">
+      <span style="font-size:.8rem;font-weight:700;color:var(--sub);">Quality:</span>
+      <div id="sleepQual" style="display:flex;gap:5px;">
+        <button class="btn bs" style="font-size:.75rem;padding:4px 10px;" onclick="setSQ('😴 Poor')">😴</button>
+        <button class="btn bs" style="font-size:.75rem;padding:4px 10px;" onclick="setSQ('😊 Good')">😊</button>
+        <button class="btn bs" style="font-size:.75rem;padding:4px 10px;" onclick="setSQ('🤩 Great')">🤩</button>
+      </div>
+    </div>
+    <button class="btn bp" onclick="logSleep()">💾 Log Sleep</button>
+  </div>
+  <div class="card">
+    <div style="font-family:'Fredoka One',cursive;margin-bottom:8px;color:var(--n3);">📅 Sleep Log</div>
+    <div id="sleepLog"><p style="color:var(--sub);font-size:.8rem;text-align:center;padding:10px;">No sleep logged yet!</p></div>
+  </div>
+</div>
+ 
+<!-- ═══ FITNESS ═══ -->
+<div id="fitness" class="sec">
+  <div class="stitle">💪 Fitness Tracker</div>
+  <div class="card" style="text-align:center;margin-bottom:11px;">
+    <svg style="position:absolute;width:0;height:0;"><defs><linearGradient id="fitg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:var(--n4)"/><stop offset="100%" style="stop-color:var(--n3)"/></linearGradient></defs></svg>
+    <div class="step-ring" onclick="addSteps(100)" title="Tap to add 100 steps!">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <circle class="step-track" cx="80" cy="80" r="68"/>
+        <circle class="step-prog" id="stepRing" cx="80" cy="80" r="68" stroke-dasharray="427" stroke-dashoffset="427"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+        <div id="step-num">0</div>
+        <div style="font-size:.65rem;color:var(--sub);font-weight:700;">/ <span id="stepGoal">8000</span> steps</div>
+        <div style="font-size:.6rem;color:var(--sub);">tap to add!</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap;">
+      <button class="btn bs" style="font-size:.75rem;" onclick="addSteps(500)">+500</button>
+      <button class="btn bs" style="font-size:.75rem;" onclick="addSteps(1000)">+1000</button>
+      <button class="btn bg" style="font-size:.75rem;" onclick="addSteps(2000)">+2000</button>
+      <button class="btn bs" style="font-size:.75rem;" onclick="resetSteps()">🔄 Reset</button>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px;font-size:.8rem;font-weight:700;">
+      <span>🔥 <span id="calBurn">0</span> cal</span>
+      <span>📍 <span id="distKm">0.0</span> km</span>
+      <span>⏱ <span id="activMin">0</span> min</span>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:11px;">
+    <div style="font-family:'Fredoka One',cursive;margin-bottom:9px;color:var(--n4);">🏋️ Log Workout</div>
+    <div style="display:flex;gap:7px;margin-bottom:9px;flex-wrap:wrap;">
+      <select id="wkType"><option>🏃 Running</option><option>🚴 Cycling</option><option>🏊 Swimming</option><option>🧘 Yoga</option><option>💪 Gym</option><option>🚶 Walking</option></select>
+      <input type="number" id="wkMins" placeholder="mins" min="1" max="300" style="width:70px;">
+      <button class="btn bp" onclick="logWorkout()">Log</button>
+    </div>
+    <div id="workoutList"></div>
+  </div>
+</div>
+ 
+<!-- ═══ REMINDERS ═══ -->
+<div id="reminders" class="sec">
+  <div class="stitle">🔔 Custom Reminders</div>
+  <div class="card" style="margin-bottom:11px;">
+    <div style="font-weight:800;font-size:.85rem;margin-bottom:10px;color:var(--n5);">➕ New Reminder</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <input id="remTxt" type="text" placeholder="Reminder message..." style="background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:10px;padding:9px 14px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;outline:none;" maxlength="40">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="time" id="remTime" value="09:00">
+        <select id="remEmoji"><option>🔔</option><option>💧</option><option>🏃</option><option>📚</option><option>😴</option><option>💊</option><option>🧘</option></select>
+        <button class="btn bp" onclick="addReminder()">Add</button>
+      </div>
+    </div>
+  </div>
+  <div id="remList"></div>
+  <p style="font-size:.72rem;color:var(--sub);text-align:center;margin-top:8px;">⚠️ Allow browser notifications to receive reminders.</p>
+</div>
+ 
+<!-- ═══ DOODLE ═══ -->
+<div id="doodle" class="sec">
+  <div class="stitle">🎨 Doodle Zone</div>
+  <div class="tlbar">
+    <div id="pal" style="display:flex;gap:4px;flex-wrap:wrap;"></div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
+      <button class="tbtn2 act" id="bb" onclick="setT('brush')">🖌</button>
+      <button class="tbtn2" id="spb" onclick="setT('spray')">💨</button>
+      <button class="tbtn2" id="eb" onclick="setT('eraser')">🧹</button>
+      <label style="font-size:.7rem;font-weight:700;color:var(--sub);">Sz:<input type="range" min="2" max="40" value="8" id="bsz" oninput="bsz2=+this.value" style="width:50px;vertical-align:middle;margin-left:3px;"></label>
+    </div>
+  </div>
+  <div class="canvas-wrap"><canvas id="dc" height="320"></canvas></div>
+  <div style="display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;">
+    <button class="btn bs" onclick="clrD()">🗑 Clear</button>
+    <button class="btn bp" onclick="saveD()">💾 Save to Wall</button>
+    <button class="btn bs" onclick="dlD()">⬇ Download</button>
+  </div>
+</div>
+ 
+<!-- ═══ SOUNDS ═══ -->
+<div id="sounds" class="sec">
+  <div class="stitle">🎵 Chill Sounds</div>
+  <div class="g3" id="sGrid"></div>
+  <div class="card" style="margin-top:11px;">
+    <label style="font-size:.78rem;font-weight:700;color:var(--sub);">🔊 Volume</label>
+    <input type="range" min="0" max="100" value="50" style="width:100%;margin-top:5px;" oninput="setVol(+this.value)">
+  </div>
+</div>
+ 
+<!-- ═══ GAMES ═══ -->
+<div id="games" class="sec">
+  <div class="stitle">🎮 Mini Games</div>
+  <div class="g3" id="gGrid"></div>
+  <!-- BUBBLE -->
+  <div id="g-bubble" class="game-area">
+    <button class="back" onclick="hg('bubble')">← Games</button>
+    <div class="sbar"><span>🫧 Bubble Pop</span><span class="sv" id="bsc">0</span></div>
+    <div id="ba"><div id="bst" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:rgba(255,255,255,.25);pointer-events:none;"><div style="font-size:2.5rem;">🫧</div><div style="font-weight:700;font-size:.82rem;">Tap Start!</div></div></div>
+    <div style="text-align:center;margin-top:9px;display:flex;gap:7px;justify-content:center;">
+      <button class="btn bp" onclick="startBub()">▶ Start</button>
+      <select id="bdiff"><option value="800">😊 Easy</option><option value="550" selected>😤 Medium</option><option value="300">🔥 Hard</option></select>
+    </div>
+  </div>
+  <!-- MEMORY -->
+  <div id="g-memory" class="game-area">
+    <button class="back" onclick="hg('memory')">← Games</button>
+    <div class="sbar"><span>🃏 Memory</span><span class="sv" id="mmsc">Moves: 0</span></div>
+    <div class="mgrd" id="mg2"></div>
+    <div style="text-align:center;margin-top:9px;"><button class="btn bp" onclick="initMem()">🔄 New</button></div>
+  </div>
+  <!-- BREATHE -->
+  <div id="g-breathe" class="game-area">
+    <button class="back" onclick="hg('breathe')">← Games</button>
+    <div style="text-align:center;">
+      <div id="btxt" style="font-family:'Fredoka One',cursive;font-size:1.2rem;min-height:28px;"></div>
+      <div id="bc2">Tap Start</div>
+      <div style="width:100%;height:5px;background:rgba(255,255,255,.07);border-radius:50px;overflow:hidden;margin-top:12px;"><div id="bf2" style="height:100%;background:linear-gradient(90deg,var(--n3),var(--n2));border-radius:50px;width:0;transition:width .1s;"></div></div>
+      <div style="margin-top:11px;display:flex;gap:7px;justify-content:center;"><button class="btn bp" onclick="startBr()">🌬️ Start</button><button class="btn bs" onclick="stopBr()">⏹</button></div>
+    </div>
+  </div>
+  <!-- WORD -->
+  <div id="g-word" class="game-area">
+    <button class="back" onclick="hg('word')">← Games</button>
+    <div class="sbar"><span>🧩 Word</span><span class="sv" id="wsc">0</span></div>
+    <div id="wHint" style="text-align:center;color:var(--sub);font-size:.8rem;margin-bottom:2px;"></div>
+    <div id="wdsp"></div>
+    <div class="lgrd" id="lgrd"></div>
+    <div style="text-align:center;display:flex;gap:7px;justify-content:center;margin-top:7px;">
+      <button class="btn bs" onclick="wHnt()">💡</button>
+      <button class="btn bp" onclick="nxtW()">⏭ Skip</button>
+    </div>
+  </div>
+  <!-- CLICKER -->
+  <div id="g-clicker" class="game-area">
+    <button class="back" onclick="hg('clicker')">← Games</button>
+    <div class="sbar"><span>😤 Clicker</span><span class="sv" id="coins2">💰 0</span></div>
+    <div style="font-family:'Fredoka One',cursive;font-size:1.7rem;text-align:center;color:var(--n5);" id="cclk2">0</div>
+    <button id="cb2" onclick="doClk()">😤</button>
+    <div class="upgs">
+      <button class="ub2" id="u1" onclick="buyU(1)">💪 x2 (10🪙)</button>
+      <button class="ub2" id="u2" onclick="buyU(2)">🤖 Auto (25🪙)</button>
+      <button class="ub2" id="u3" onclick="buyU(3)">⚡ Mega (50🪙)</button>
+    </div>
+  </div>
+  <!-- SNAKE -->
+  <div id="g-snake" class="game-area">
+    <button class="back" onclick="hg('snake')">← Games</button>
+    <div class="sbar"><span>🐍 Snake</span><span class="sv" id="snsc">0</span></div>
+    <canvas id="snc" width="280" height="280"></canvas>
+    <div style="text-align:center;margin-top:8px;"><button class="btn bp" onclick="startSn()">▶ Start</button></div>
+    <div style="display:grid;grid-template-columns:repeat(3,36px);gap:4px;margin:8px auto;width:fit-content;">
+      <div></div><button class="btn bs" style="padding:5px;font-size:.8rem;" onclick="sd(0,-1)">⬆</button><div></div>
+      <button class="btn bs" style="padding:5px;font-size:.8rem;" onclick="sd(-1,0)">⬅</button>
+      <button class="btn bs" style="padding:5px;font-size:.8rem;" onclick="sd(0,1)">⬇</button>
+      <button class="btn bs" style="padding:5px;font-size:.8rem;" onclick="sd(1,0)">➡</button>
+    </div>
+  </div>
+  <!-- TRIVIA -->
+  <div id="g-trivia" class="game-area">
+    <button class="back" onclick="hg('trivia')">← Games</button>
+    <div class="sbar"><span>❓ Trivia</span><span class="sv" id="trsc">0</span></div>
+    <div id="trq" style="font-size:.92rem;font-weight:700;margin-bottom:11px;line-height:1.5;text-align:center;"></div>
+    <div id="trop"></div>
+    <div style="text-align:center;margin-top:9px;"><button class="btn bp" id="trnxt" onclick="nxtTr()" style="display:none;">➡ Next</button></div>
+  </div>
+  <!-- SPIN -->
+  <div id="g-spin" class="game-area">
+    <button class="back" onclick="hg('spin')">← Games</button>
+    <canvas id="spinc" width="250" height="250" style="display:block;margin:0 auto;max-width:100%;"></canvas>
+    <div id="spres" style="text-align:center;font-family:'Fredoka One',cursive;font-size:1.1rem;min-height:32px;color:var(--n5);margin:7px 0;"></div>
+    <div style="text-align:center;"><button class="btn bp" id="spbtn" onclick="doSpin()">🎡 SPIN!</button></div>
+  </div>
+  <!-- FLAPPY BIRD -->
+  <div id="g-flappy" class="game-area">
+    <button class="back" onclick="hg('flappy')">← Games</button>
+    <div class="sbar"><span>🐦 Flappy Bird</span><span class="sv" id="flapsc">0</span></div>
+    <canvas id="flapc" width="280" height="360" style="display:block;margin:0 auto;max-width:100%;cursor:pointer;border-radius:10px;background:linear-gradient(180deg,#0a1628,#050510);"></canvas>
+    <div style="text-align:center;margin-top:9px;"><p style="color:var(--sub);font-size:.75rem;margin-bottom:6px;">Tap canvas or Space to flap!</p><button class="btn bp" onclick="startFlap()">▶ Start</button></div>
+  </div>
+  <!-- DINO RUN -->
+  <div id="g-dino" class="game-area">
+    <button class="back" onclick="hg('dino')">← Games</button>
+    <div class="sbar"><span>🦕 Dino Run</span><span class="sv" id="dinosc">0</span></div>
+    <canvas id="dinoc" width="320" height="160" style="display:block;margin:0 auto;max-width:100%;border-radius:10px;"></canvas>
+    <div style="text-align:center;margin-top:9px;"><p style="color:var(--sub);font-size:.75rem;margin-bottom:6px;">Tap or Space to jump!</p><button class="btn bp" onclick="startDino()">▶ Start</button></div>
+  </div>
+</div>
+ 
+<!-- ═══ POMODORO ═══ -->
+<div id="pomo" class="sec">
+  <div class="stitle">⏱ Focus Timer</div>
+  <div class="card" style="text-align:center;max-width:310px;margin:0 auto;">
+    <svg style="position:absolute;width:0;height:0;"><defs><linearGradient id="pg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:var(--n1)"/><stop offset="100%" style="stop-color:var(--n2)"/></linearGradient></defs></svg>
+    <div class="pring">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle class="pt2" cx="70" cy="70" r="60"/>
+        <circle class="pp2" id="pp2" cx="70" cy="70" r="60" stroke-dasharray="377" stroke-dashoffset="0"/>
+      </svg>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;"><div id="pd2">25:00</div><div style="font-size:.65rem;color:var(--sub);font-weight:700;" id="ps2">Focus</div></div>
+    </div>
+    <div style="color:var(--sub);font-size:.8rem;font-weight:700;margin-bottom:9px;" id="plbl2">Ready 🧠</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-bottom:9px;flex-wrap:wrap;">
+      <button class="btn bp" onclick="pStart()">▶</button><button class="btn bs" onclick="pPause()">⏸</button><button class="btn bs" onclick="pReset()">🔄</button>
+    </div>
+    <div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">
+      <button class="btn bs" style="font-size:.7rem;padding:5px 10px;" onclick="setP('focus',25)">🧠 25m</button>
+      <button class="btn bs" style="font-size:.7rem;padding:5px 10px;" onclick="setP('short',5)">☕ 5m</button>
+      <button class="btn bs" style="font-size:.7rem;padding:5px 10px;" onclick="setP('long',15)">🛋 15m</button>
+    </div>
+    <div style="background:var(--card2);border-radius:11px;padding:10px;">
+      <div style="font-weight:700;font-size:.78rem;color:var(--sub);">Sessions Today</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--n6);" id="pcnt2">0</div>
+    </div>
+  </div>
+</div>
+ 
+<!-- ═══ COMMUNITY WALL ═══ -->
+<div id="community" class="sec">
+  <div class="stitle">🌍 Community Wall</div>
+  <p style="text-align:center;color:var(--sub);font-size:.8rem;margin-bottom:12px;">Save doodles to share here 🎨</p>
+  <div class="wall-grid" id="wallGrid">
+    <div style="grid-column:1/-1;text-align:center;padding:30px;color:rgba(255,255,255,.25);">
+      <div style="font-size:2.5rem;">🎨</div><p style="font-size:.85rem;">No doodles yet! Draw something 🖌</p>
+    </div>
+  </div>
+</div>
+ 
+<!-- ═══ CHAT ═══ -->
+<div id="chat" class="sec">
+  <div class="stitle">💬 Chat</div>
+  <div style="display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;" id="friendList"></div>
+  <div class="card" style="margin-bottom:10px;">
+    <div style="font-size:.75rem;font-weight:800;color:var(--sub);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+      <span id="chatWith">🌍 Global Chat</span>
+      <span class="online-dot"></span><span style="color:var(--n4);font-size:.65rem;">Live</span>
+    </div>
+    <div class="chat-wrap" id="chatWrap"></div>
+    <div class="chat-inp-row">
+      <input class="chat-inp" id="msgInp" placeholder="Type a message..." maxlength="120" onkeydown="if(event.key==='Enter')sendMsg()">
+      <button class="btn bp" onclick="sendMsg()" style="padding:8px 14px;">Send</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- ═══ LEADERBOARD ═══ -->
+<div id="leaderboard" class="sec">
+  <div class="stitle">🏆 Leaderboard</div>
+  <div style="text-align:center;margin-bottom:14px;">
+    <div style="font-size:.82rem;color:var(--sub);margin-bottom:7px;">Add yourself to the board!</div>
+    <div style="display:flex;gap:7px;justify-content:center;">
+      <input id="lbNm" type="text" placeholder="Your name" maxlength="14" style="background:var(--card2);border:1px solid var(--border);border-radius:50px;padding:7px 14px;color:var(--text);font-family:'Nunito',sans-serif;font-weight:700;outline:none;width:160px;">
+      <button class="btn bp" onclick="addToLB()" style="padding:7px 14px;">➕ Add</button>
+    </div>
+  </div>
+  <div id="lbList"></div>
+</div>
+ 
+<!-- ═══ FUTURE SCOPE ═══ -->
+<div id="future" class="sec">
+  <div style="text-align:center;padding:14px 8px 18px;">
+    <div style="font-family:'Fredoka One',cursive;font-size:clamp(1.7rem,6vw,2.5rem);background:linear-gradient(135deg,var(--n3),var(--n2),var(--n1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">🚀 Future Roadmap</div>
+    <p style="color:var(--sub);font-size:.82rem;margin-top:5px;">Atul's path to 1 million users 🇮🇳</p>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;">
+    <span style="padding:3px 10px;border-radius:50px;font-size:.68rem;font-weight:800;background:rgba(6,255,165,.1);border:1px solid rgba(6,255,165,.25);color:var(--n4);">✅ v5 Live Now</span>
+    <span style="padding:3px 10px;border-radius:50px;font-size:.68rem;font-weight:800;background:rgba(255,190,11,.1);border:1px solid rgba(255,190,11,.25);color:var(--n5);">🔨 Phase 1 · Mobile</span>
+    <span style="padding:3px 10px;border-radius:50px;font-size:.68rem;font-weight:800;background:rgba(131,56,236,.1);border:1px solid rgba(131,56,236,.25);color:var(--n2);">💡 Phase 2 · AI</span>
+    <span style="padding:3px 10px;border-radius:50px;font-size:.68rem;font-weight:800;background:rgba(58,134,255,.1);border:1px solid rgba(58,134,255,.25);color:var(--n3);">🌐 Phase 3 · Scale</span>
+  </div>
+  <div id="roadmapItems"></div>
+  <div style="background:linear-gradient(135deg,rgba(255,0,110,.07),rgba(131,56,236,.07),rgba(58,134,255,.07));border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:16px;text-align:center;margin-top:4px;">
+    <div style="font-size:1.8rem;margin-bottom:6px;">🎯</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:6px;background:linear-gradient(135deg,var(--n5),var(--n1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">The Mission</div>
+    <p style="color:var(--sub);font-size:.82rem;line-height:1.7;max-width:520px;margin:0 auto;">India's #1 mental wellness app for Gen Z. Built by <strong style="color:var(--text);">Atul Thakur</strong> — one HTML file at a time. Target: <strong style="color:var(--n4);">1 million users</strong>. Made in India 🇮🇳 for the world 🌍</p>
+    <button class="btn bp" onclick="confetti();toast('🚀 Let\'s go Atul!')" style="margin-top:12px;">🚀 Let's Build!</button>
+  </div>
+</div>
+ 
+<div id="toast"></div>
+ 
+<script>
+// ══════ INIT ══════
+setTimeout(()=>{const s=document.getElementById('splash');s.classList.add('out');setTimeout(()=>s.remove(),700);initBg();initWeatherTip();initQuote();},2400);
+function initBg(){/* orbs already in HTML */}
+ 
+// ══════ STATE ══════
+let xp=0,lvl=1,streak=0,moodLog=[],wallDoodles=[],habits=[],sleepLog=[],workouts=[],reminders=[],steps=0,stepGoal=8000,pCnt=0,earnedBadges=new Set(),leaderboard=[],chatMsgs=[],sleepQuality='😊 Good';
+let userName='Atul Thakur',userAvatar='😎';
+let activeSounds={},masterVol=.5,audioCtx;
+ 
+// Load from localStorage
+try{
+  const saved=JSON.parse(localStorage.getItem('vz5')||'{}');
+  if(saved.xp)xp=saved.xp;if(saved.lvl)lvl=saved.lvl;if(saved.streak)streak=saved.streak;
+  if(saved.habits)habits=saved.habits;if(saved.sleepLog)sleepLog=saved.sleepLog;
+  if(saved.reminders)reminders=saved.reminders;if(saved.steps)steps=saved.steps;
+  if(saved.userName)userName=saved.userName;if(saved.userAvatar)userAvatar=saved.userAvatar;
+  if(saved.leaderboard)leaderboard=saved.leaderboard;
+  if(saved.earnedBadges)earnedBadges=new Set(saved.earnedBadges);
+}catch(e){}
+ 
+function save(){
+  try{localStorage.setItem('vz5',JSON.stringify({xp,lvl,streak,habits,sleepLog,reminders,steps,userName,userAvatar,leaderboard,earnedBadges:[...earnedBadges]}));}catch(e){}
+}
+ 
+// ══════ NAV ══════
+const TABS=['home','profile','mood','habits','sleep','fitness','reminders','doodle','sounds','games','pomo','community','chat','leaderboard','future'];
+function S(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nt').forEach((t,i)=>t.classList.toggle('active',TABS[i]===id));
+  document.getElementById(id).classList.add('active');
+  if(id==='doodle')setTimeout(initDoodle,40);
+  if(id==='sounds')initSounds();
+  if(id==='profile')renderProfile();
+  if(id==='habits')renderHabits();
+  if(id==='sleep')renderSleepLog();
+  if(id==='fitness')renderFitness();
+  if(id==='reminders')renderReminders();
+  if(id==='community')renderWall();
+  if(id==='leaderboard')renderLB();
+  if(id==='chat')renderChat();
+  if(id==='future')renderRoadmap();
+}
+function showGame(g){
+  S('games');
+  setTimeout(()=>{
+    document.querySelectorAll('.game-area').forEach(a=>a.classList.remove('active'));
+    const el=document.getElementById('g-'+g);if(el)el.classList.add('active');
+    if(g==='memory')initMem();if(g==='word')initWrd();if(g==='breathe')stopBr();
+    if(g==='spin')initSpin();if(g==='trivia')initTrivia();
+    if(g==='flappy')stopFlap();if(g==='dino')stopDino();
+  },60);
+}
+function hg(g){document.getElementById('g-'+g).classList.remove('active');if(g==='breathe')stopBr();if(g==='bubble')stopBub();if(g==='snake')stopSn();if(g==='flappy')stopFlap();if(g==='dino')stopDino();}
+ 
+// ══════ TOAST & CONFETTI ══════
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2700);}
+function confetti(){
+  const w=document.getElementById('cfwrap');const cols=['#ff006e','#8338ec','#3a86ff','#06ffa5','#ffbe0b','#fb5607'];
+  for(let i=0;i<50;i++){const p=document.createElement('div');p.className='cp';const sz=7+Math.random()*7;p.style.cssText=`left:${Math.random()*100}vw;width:${sz}px;height:${sz}px;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random()>.5?'50%':'2px'};`;w.appendChild(p);setTimeout(()=>p.remove(),3000);}
+}
+ 
+// ══════ XP ══════
+function addXP(n,r){xp+=n;const need=lvl*100;if(xp>=need){xp-=need;lvl++;confetti();toast(`🎉 Level Up! Level ${lvl}!`);}document.getElementById('xpB').style.width=(xp/(lvl*100)*100)+'%';document.getElementById('lvlV').textContent=lvl;if(r)toast(`+${n} XP`);checkBadges();save();}
+const allBdgs=[{id:'first-mood',n:'First Mood',i:'💭'},{id:'mood5',n:'Mood Tracker',i:'📊'},{id:'lv3',n:'Rising Star',i:'⭐'},{id:'lv5',n:'Vibe King',i:'👑'},{id:'habit7',n:'Habit Hero',i:'🏅'},{id:'sleep7',n:'Sleep Pro',i:'🌙'},{id:'steps10k',n:'Step Master',i:'👟'},{id:'doodler',n:'Doodler',i:'🎨'},{id:'focuser',n:'Focus Hero',i:'⏱'},{id:'joker',n:'Laugh Boss',i:'😂'},{id:'streak7',n:'7-Day Streak',i:'🔥'},{id:'chat1',n:'Social Vibe',i:'💬'}];
+function checkBadges(){const checks={['first-mood']:moodLog.length>=1,['mood5']:moodLog.length>=5,['lv3']:lvl>=3,['lv5']:lvl>=5,['habit7']:habits.filter(h=>h.streak>=7).length>0,['streak7']:streak>=7,['steps10k']:steps>=10000};Object.entries(checks).forEach(([id,cond])=>{if(cond&&!earnedBadges.has(id)){earnedBadges.add(id);document.getElementById('bdgCnt').textContent=earnedBadges.size;toast(`🏅 Badge: ${allBdgs.find(b=>b.id===id)?.n}!`);}});save();}
+function renderBadges(){const g=document.getElementById('bdgGrid');if(!g)return;g.innerHTML=allBdgs.map(b=>`<div class="bdg ${earnedBadges.has(b.id)?'earn':''}"><div class="bi">${b.i}</div><div class="bn">${b.n}</div></div>`).join('');}
+ 
+// ══════ QUOTES ══════
+const quotes=[{t:"The secret of getting ahead is getting started.",a:"Mark Twain"},{t:"Your vibe attracts your tribe. Stay positive.",a:"Unknown"},{t:"Stress is temporary. Your vibe is eternal.",a:"Atul Thakur"},{t:"Don't watch the clock; do what it does. Keep going.",a:"Sam Levenson"},{t:"You are braver than you believe.",a:"A.A. Milne"},{t:"Small steps every day = massive wins over time.",a:"Unknown"},{t:"Happiness is not ready-made. It comes from your actions.",a:"Dalai Lama"},{t:"Every day is a second chance. Use it.",a:"Unknown"}];
+let qIdx=0;
+function initQuote(){qIdx=Math.floor(Math.random()*quotes.length);renderQ();}
+function nxtQ(){qIdx=(qIdx+1)%quotes.length;renderQ();addXP(1);}
+function renderQ(){const q=quotes[qIdx];document.getElementById('qtT').textContent='"'+q.t+'"';document.getElementById('qtA').textContent='— '+q.a;}
+ 
+// ══════ HOME GRID ══════
+const hItems=[
+  {i:'😊',l:'Mood',c1:'#ff006e',c2:'#8338ec',fn:"S('mood')"},
+  {i:'📅',l:'Habits',c1:'#06ffa5',c2:'#3a86ff',fn:"S('habits')"},
+  {i:'🌙',l:'Sleep',c1:'#3a86ff',c2:'#8338ec',fn:"S('sleep')"},
+  {i:'💪',l:'Fitness',c1:'#06ffa5',c2:'#ffbe0b',fn:"S('fitness')"},
+  {i:'🔔',l:'Remind',c1:'#ffbe0b',c2:'#fb5607',fn:"S('reminders')"},
+  {i:'🎨',l:'Doodle',c1:'#ffbe0b',c2:'#fb5607',fn:"S('doodle')"},
+  {i:'🎵',l:'Sounds',c1:'#3a86ff',c2:'#06ffa5',fn:"S('sounds')"},
+  {i:'⏱',l:'Focus',c1:'#ff006e',c2:'#ffbe0b',fn:"S('pomo')"},
+  {i:'🫧',l:'Bubbles',c1:'#8338ec',c2:'#3a86ff',fn:"showGame('bubble')"},
+  {i:'🐍',l:'Snake',c1:'#06ffa5',c2:'#3a86ff',fn:"showGame('snake')"},
+  {i:'🐦',l:'Flappy',c1:'#3a86ff',c2:'#06ffa5',fn:"showGame('flappy')"},
+  {i:'🦕',l:'Dino',c1:'#06ffa5',c2:'#ffbe0b',fn:"showGame('dino')"},
+  {i:'🌍',l:'Wall',c1:'#ff006e',c2:'#8338ec',fn:"S('community')"},
+  {i:'💬',l:'Chat',c1:'#3a86ff',c2:'#06ffa5',fn:"S('chat')"},
+  {i:'🏆',l:'Top',c1:'#ffbe0b',c2:'#fb5607',fn:"S('leaderboard')"},
+  {i:'🚀',l:'Roadmap',c1:'#8338ec',c2:'#3a86ff',fn:"S('future')"},
+];
+document.getElementById('hGrid').innerHTML=hItems.map(h=>`<div class="qcard" style="--c1:${h.c1};--c2:${h.c2}" onclick="${h.fn}"><span class="qi">${h.i}</span><span class="ql">${h.l}</span></div>`).join('');
+ 
+// ══════ GAMES GRID ══════
+const gList=[{id:'bubble',i:'🫧',n:'Bubbles',d:'Pop!',c:'#3a86ff'},{id:'memory',i:'🃏',n:'Memory',d:'Match!',c:'#8338ec'},{id:'breathe',i:'🌬️',n:'Breathe',d:'Relax',c:'#06ffa5'},{id:'word',i:'🧩',n:'Word',d:'Guess!',c:'#ffbe0b'},{id:'clicker',i:'😤',n:'Clicker',d:'Click!',c:'#fb5607'},{id:'snake',i:'🐍',n:'Snake',d:'Classic',c:'#06ffa5'},{id:'trivia',i:'❓',n:'Trivia',d:'Brain!',c:'#3a86ff'},{id:'spin',i:'🎡',n:'Spin',d:'Random',c:'#ff006e'},{id:'flappy',i:'🐦',n:'Flappy',d:'NEW!',c:'#3a86ff'},{id:'dino',i:'🦕',n:'Dino Run',d:'NEW!',c:'#06ffa5'}];
+document.getElementById('gGrid').innerHTML=gList.map(g=>`<div class="gcard2" style="--gc:${g.c}" onclick="showGame('${g.id}')"><span class="gi2">${g.i}</span><div class="gn2">${g.n}</div><div class="gd2">${g.d}</div></div>`).join('');
+ 
+// ══════ PROFILE ══════
+const avList=['😎','🦁','🐼','🦊','🐸','🦋','👾','🤖','🧑‍🚀','🥷','🧙','🦸'];
+document.getElementById('avOpts').innerHTML=avList.map(a=>`<div style="width:40px;height:40px;border-radius:50%;background:var(--card2);border:2px solid transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:all .2s;" onclick="setAv('${a}',this)" class="${a===userAvatar?'sel':''}">${a}</div>`).join('');
+function toggleAvPick(){const p=document.getElementById('avPick');p.style.display=p.style.display==='none'?'block':'none';}
+function setAv(a,el){userAvatar=a;document.getElementById('avEmoji').textContent=a;document.querySelectorAll('#avOpts div').forEach(d=>d.style.borderColor='transparent');el.style.borderColor='var(--n1)';save();}
+function updateName(){userName=document.getElementById('nmInp').value||'Atul';document.getElementById('greet').textContent=`Hey ${userName.split(' ')[0]}! Stress ka koi chance nahi 🔥`;save();}
+document.getElementById('nmInp').value=userName;
+const themes=[{id:'neon',n:'🌈 Neon',bg:'#050510'},{id:'ocean',n:'🌊 Ocean',bg:'#030d1a'},{id:'sunset',n:'🌅 Sunset',bg:'#0f0505'},{id:'forest',n:'🌲 Forest',bg:'#030d08'}];
+let activeTheme='neon';
+function renderProfile(){document.getElementById('pLv').textContent=lvl;document.getElementById('pXP').textContent=xp;document.getElementById('pSt').textContent=streak;renderBadges();document.getElementById('thGrid').innerHTML=themes.map(t=>`<button style="padding:6px 13px;border-radius:50px;border:1px solid ${t.id===activeTheme?'var(--n2)':'var(--border)'};background:var(--card);color:${t.id===activeTheme?'var(--text)':'var(--sub)'};font-family:'Nunito',sans-serif;font-weight:700;font-size:.74rem;cursor:pointer;transition:all .2s;" onclick="setTheme('${t.id}')">${t.n}</button>`).join('');}
+function setTheme(id){activeTheme=id;const t=themes.find(x=>x.id===id);document.body.style.setProperty('--bg',t.bg);renderProfile();toast('🌈 Theme changed!');}
+renderBadges();
+ 
+// ══════ MOOD ══════
+const moods=[{e:'😄',n:'Happy',v:10},{e:'😌',n:'Calm',v:8},{e:'😤',n:'Stressed',v:2},{e:'😴',n:'Tired',v:3},{e:'🤩',n:'Excited',v:9},{e:'😢',n:'Sad',v:1},{e:'😂',n:'LOL',v:10},{e:'😑',n:'Bored',v:4},{e:'🥳',n:'Party',v:10},{e:'😎',n:'Cool',v:8},{e:'🔥',n:'Pumped',v:9},{e:'😶',n:'Blank',v:5}];
+document.getElementById('mGrid').innerHTML=moods.map((m,i)=>`<div class="mb" onclick="pickM(${i})"><span class="me2">${m.e}</span><div class="mn2">${m.n}</div></div>`).join('');
+function pickM(i){document.querySelectorAll('.mb').forEach((b,j)=>b.classList.toggle('sel',j===i));const m=moods[i];moodLog.unshift({e:m.e,n:m.n,v:m.v,t:new Date().toLocaleTimeString()});if(moodLog.length>20)moodLog.pop();renderML();renderChart();addXP(5);checkBadges();confetti();toast(`${m.e} ${m.n} logged!`);}
+function renderML(){const el=document.getElementById('mLog');if(!moodLog.length){el.innerHTML='<p style="color:var(--sub);text-align:center;padding:10px;font-size:.78rem;">Pick a mood 👆</p>';return;}el.innerHTML=moodLog.slice(0,8).map(e=>`<div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.8rem;"><span style="font-size:1.1rem;">${e.e}</span><span style="font-weight:700;">${e.n}</span><span style="margin-left:auto;color:var(--sub);font-size:.68rem;">${e.t}</span></div>`).join('');}
+function renderChart(){const el=document.getElementById('mChart');if(!moodLog.length){el.innerHTML='<div style="color:var(--sub);font-size:.75rem;text-align:center;width:100%;padding:20px;">No data yet!</div>';return;}const l7=moodLog.slice(0,7).reverse();const mx=Math.max(...l7.map(m=>m.v));const cols=['#ff006e','#8338ec','#3a86ff','#06ffa5','#ffbe0b','#fb5607','#ff006e'];el.innerHTML=l7.map((m,i)=>`<div class="cbc"><div class="cbr" style="height:${Math.round((m.v/mx)*100)}px;background:${cols[i]};box-shadow:0 0 7px ${cols[i]}80;"></div><div class="cbl">${m.e}</div></div>`).join('');}
+ 
+// ══════ HABIT TRACKER ══════
+function addHabit(){const inp=document.getElementById('hInp'),em=document.getElementById('hEmoji').value;if(!inp.value.trim())return;habits.push({id:Date.now(),name:inp.value.trim(),emoji:em,done:false,streak:0,lastDone:null});inp.value='';renderHabits();save();toast('✅ Habit added!');}
+function renderHabits(){
+  const el=document.getElementById('habitList');
+  if(!habits.length){el.innerHTML='<p style="color:var(--sub);font-size:.8rem;text-align:center;padding:10px;">No habits yet! Add one above 👆</p>';return;}
+  el.innerHTML=habits.map(h=>`<div class="habit-item ${h.done?'done':''}" id="hitem-${h.id}">
+    <div class="habit-check" onclick="toggleHabit(${h.id})">${h.done?'✅':''}</div>
+    <span class="habit-name">${h.emoji} ${h.name}</span>
+    <span class="habit-streak">🔥${h.streak}d</span>
+    <button onclick="delHabit(${h.id})" style="background:none;border:none;color:var(--sub);cursor:pointer;font-size:.85rem;padding:2px 6px;">✕</button>
+  </div>`).join('');
+  const done=habits.filter(h=>h.done).length;
+  const pct=habits.length?Math.round(done/habits.length*100):0;
+  document.getElementById('habitBar').style.width=pct+'%';
+  document.getElementById('habitStat').textContent=`${done} of ${habits.length} habits done (${pct}%)`;
+  if(pct===100&&habits.length>0){confetti();toast('🎉 All habits done today!');}
+}
+function toggleHabit(id){const h=habits.find(x=>x.id===id);if(!h)return;h.done=!h.done;if(h.done){h.streak++;addXP(5,'Habit done!');}else{h.streak=Math.max(0,h.streak-1);}renderHabits();save();checkBadges();}
+function delHabit(id){habits=habits.filter(h=>h.id!==id);renderHabits();save();}
+ 
+// ══════ SLEEP TRACKER ══════
+function setSQ(q){sleepQuality=q;toast('Quality: '+q);}
+function logSleep(){
+  const bed=document.getElementById('bedT').value,wake=document.getElementById('wakeT').value;
+  const [bh,bm]=bed.split(':').map(Number),[wh,wm]=wake.split(':').map(Number);
+  let hrs=wh+wm/60-(bh+bm/60);if(hrs<0)hrs+=24;hrs=Math.round(hrs*10)/10;
+  sleepLog.unshift({hrs,bed,wake,quality:sleepQuality,date:new Date().toLocaleDateString()});
+  if(sleepLog.length>14)sleepLog.pop();
+  updateSleepRing(hrs);renderSleepLog();addXP(8,'Sleep logged!');save();confetti();toast(`😴 ${hrs}h sleep logged!`);
+}
+function updateSleepRing(hrs){const pct=Math.min(hrs/9,1);document.getElementById('sRing').style.strokeDashoffset=364*(1-pct);document.getElementById('sleep-hrs').textContent=hrs+'h';}
+function renderSleepLog(){
+  const el=document.getElementById('sleepLog');
+  if(sleepLog.length&&document.getElementById('sleep-hrs'))updateSleepRing(sleepLog[0]?.hrs||0);
+  if(!sleepLog.length){el.innerHTML='<p style="color:var(--sub);font-size:.8rem;text-align:center;padding:10px;">No sleep logged yet!</p>';return;}
+  el.innerHTML=sleepLog.slice(0,7).map(s=>`<div class="sleep-log-item">
+    <span style="font-size:1.2rem;">🌙</span>
+    <div style="flex:1;"><div style="font-weight:700;font-size:.82rem;">${s.date} · ${s.quality}</div><div style="font-size:.7rem;color:var(--sub);">${s.bed} → ${s.wake}</div></div>
+    <div style="text-align:right;"><div style="font-family:'Fredoka One',cursive;color:var(--n3);">${s.hrs}h</div><div style="font-size:.65rem;color:${s.hrs>=7?'var(--n4)':s.hrs>=5?'var(--n5)':'var(--n1)'};">${s.hrs>=7?'Great':'Good enough'}</div></div>
+  </div>`).join('');
+}
+ 
+// ══════ FITNESS ══════
+function addSteps(n){steps+=n;renderFitness();if(steps>=stepGoal){confetti();toast('🏅 Step goal reached!');earnedBadges.add('steps10k');document.getElementById('bdgCnt').textContent=earnedBadges.size;}save();}
+function resetSteps(){steps=0;renderFitness();save();}
+function renderFitness(){
+  const pct=Math.min(steps/stepGoal,1);
+  document.getElementById('stepRing').style.strokeDashoffset=427*(1-pct);
+  document.getElementById('step-num').textContent=steps.toLocaleString();
+  document.getElementById('calBurn').textContent=Math.round(steps*.04);
+  document.getElementById('distKm').textContent=(steps*.0008).toFixed(1);
+  document.getElementById('activMin').textContent=Math.round(steps/100);
+  renderWorkouts();
+}
+function logWorkout(){const type=document.getElementById('wkType').value,mins=+document.getElementById('wkMins').value;if(!mins||mins<1)return;workouts.unshift({type,mins,cal:Math.round(mins*7),t:new Date().toLocaleTimeString()});if(workouts.length>10)workouts.pop();document.getElementById('wkMins').value='';renderWorkouts();addXP(10,'Workout logged!');save();toast(`${type} for ${mins} min logged! 💪`);}
+function renderWorkouts(){const el=document.getElementById('workoutList');if(!el)return;if(!workouts.length){el.innerHTML='<p style="color:var(--sub);font-size:.78rem;text-align:center;padding:8px;">No workouts yet!</p>';return;}el.innerHTML=workouts.slice(0,5).map(w=>`<div class="workout-item"><span style="font-size:1.3rem;">${w.type.split(' ')[0]}</span><div style="flex:1;"><div style="font-weight:700;font-size:.82rem;">${w.type}</div><div style="font-size:.7rem;color:var(--sub);">${w.t}</div></div><div style="text-align:right;"><div style="font-family:'Fredoka One',cursive;color:var(--n4);">${w.mins}m</div><div style="font-size:.65rem;color:var(--sub);">~${w.cal} cal</div></div></div>`).join('');}
+ 
+// ══════ REMINDERS ══════
+function addReminder(){const txt=document.getElementById('remTxt').value.trim(),time=document.getElementById('remTime').value,em=document.getElementById('remEmoji').value;if(!txt)return;reminders.push({id:Date.now(),txt,time,emoji:em,active:true});document.getElementById('remTxt').value='';renderReminders();save();scheduleReminder(reminders[reminders.length-1]);toast(`${em} Reminder set for ${time}!`);}
+function renderReminders(){const el=document.getElementById('remList');if(!reminders.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--sub);font-size:.82rem;">No reminders yet! Add one above 👆</div>';return;}el.innerHTML=reminders.map(r=>`<div class="rem-item ${r.active?'active':''}"><div class="rem-time">${r.time}</div><span style="font-size:1.3rem;">${r.emoji}</span><div style="flex:1;font-weight:700;font-size:.85rem;">${r.txt}</div><button class="rem-toggle ${r.active?'on':''}" onclick="toggleRem(${r.id})"></button><button onclick="delRem(${r.id})" style="background:none;border:none;color:var(--sub);cursor:pointer;font-size:.85rem;padding:2px 6px;">✕</button></div>`).join('');}
+function toggleRem(id){const r=reminders.find(x=>x.id===id);if(r)r.active=!r.active;renderReminders();save();}
+function delRem(id){reminders=reminders.filter(r=>r.id!==id);renderReminders();save();}
+function scheduleReminder(r){if(!('Notification' in window))return;Notification.requestPermission().then(perm=>{if(perm!=='granted')return;const[h,m]=r.time.split(':').map(Number);const now=new Date(),target=new Date();target.setHours(h,m,0,0);if(target<=now)target.setDate(target.getDate()+1);const ms=target-now;setTimeout(()=>{if(r.active)new Notification(`${r.emoji} VibeZone`,{body:r.txt,icon:'🌈'});},ms);});}
+reminders.forEach(r=>{if(r.active)scheduleReminder(r);});
+ 
+// ══════ DOODLE ══════
+let dctx,drw=false,bc='#ff006e',bsz2=8,dtl='brush',dlx=0,dly=0;
+const dcols=['#ff006e','#8338ec','#3a86ff','#06ffa5','#ffbe0b','#fb5607','#ffffff','#000000'];
+function initDoodle(){const c=document.getElementById('dc');if(!c||c._init)return;c._init=true;c.width=c.offsetWidth||800;dctx=c.getContext('2d');dctx.fillStyle='#fff';dctx.fillRect(0,0,c.width,c.height);const gp=e=>{const r=c.getBoundingClientRect(),s=e.touches?e.touches[0]:e;return[s.clientX-r.left,s.clientY-r.top];};c.addEventListener('mousedown',e=>{drw=true;[dlx,dly]=gp(e);});c.addEventListener('mousemove',e=>{if(!drw)return;const[x,y]=gp(e);if(dtl==='spray'){for(let i=0;i<12;i++){const ox=(Math.random()-.5)*bsz2*2,oy=(Math.random()-.5)*bsz2*2;dctx.fillStyle=bc;dctx.beginPath();dctx.arc(x+ox,y+oy,1,0,Math.PI*2);dctx.fill();}}else{dctx.beginPath();dctx.lineWidth=bsz2;dctx.lineCap='round';dctx.strokeStyle=dtl==='eraser'?'#fff':bc;dctx.moveTo(dlx,dly);dctx.lineTo(x,y);dctx.stroke();}[dlx,dly]=[x,y];});c.addEventListener('mouseup',()=>drw=false);c.addEventListener('mouseleave',()=>drw=false);c.addEventListener('touchstart',e=>{e.preventDefault();drw=true;[dlx,dly]=gp(e);},{passive:false});c.addEventListener('touchmove',e=>{e.preventDefault();if(!drw)return;const[x,y]=gp(e);dctx.beginPath();dctx.lineWidth=bsz2;dctx.lineCap='round';dctx.strokeStyle=dtl==='eraser'?'#fff':bc;dctx.moveTo(dlx,dly);dctx.lineTo(x,y);dctx.stroke();[dlx,dly]=[x,y];},{passive:false});c.addEventListener('touchend',()=>drw=false);document.getElementById('pal').innerHTML=dcols.map(cl=>`<div class="cdot ${cl===bc?'act':''}" style="background:${cl}" onclick="setC('${cl}',this)"></div>`).join('');}
+function setC(cl,el){bc=cl;if(dtl==='eraser')dtl='brush';document.querySelectorAll('.cdot').forEach(d=>d.classList.remove('act'));el.classList.add('act');}
+function setT(t){dtl=t;['bb','spb','eb'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('act');});const map={brush:'bb',spray:'spb',eraser:'eb'};if(map[t])document.getElementById(map[t]).classList.add('act');}
+function clrD(){if(!dctx)return;const c=document.getElementById('dc');dctx.fillStyle='#fff';dctx.fillRect(0,0,c.width,c.height);}
+function saveD(){const c=document.getElementById('dc');const sel=document.querySelector('.mb.sel');const mood=sel?sel.querySelector('.me2').textContent+' '+sel.querySelector('.mn2').textContent:'🎨 Vibing';wallDoodles.unshift({d:c.toDataURL(),mood,t:new Date().toLocaleTimeString(),likes:0});if(wallDoodles.length>16)wallDoodles.pop();earnedBadges.add('doodler');document.getElementById('bdgCnt').textContent=earnedBadges.size;addXP(10,'Doodle saved!');confetti();toast('🎨 Saved to Wall!');}
+function dlD(){const c=document.getElementById('dc');const a=document.createElement('a');a.href=c.toDataURL();a.download='vibezone.png';a.click();}
+function renderWall(){const g=document.getElementById('wallGrid');if(!wallDoodles.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:28px;color:rgba(255,255,255,.22);"><div style="font-size:2.5rem;">🎨</div><p style="font-size:.82rem;">No doodles yet!</p></div>';return;}g.innerHTML=wallDoodles.map((d,i)=>`<div class="wcard"><img src="${d.d}"><div class="winfo"><div class="wmood">${d.mood}</div><div style="display:flex;justify-content:space-between;align-items:center;"><div class="wtime">⏰ ${d.t}</div><button class="wlike" onclick="likeWall(${i})">❤️ ${d.likes}</button></div></div></div>`).join('');}
+function likeWall(i){wallDoodles[i].likes++;renderWall();}
+ 
+// ══════ SOUNDS ══════
+const sDefs=[{id:'rain',i:'🌧️',n:'Rain'},{id:'ocean',i:'🌊',n:'Ocean'},{id:'lofi',i:'🎵',n:'Lo-fi'},{id:'forest',i:'🌲',n:'Forest'},{id:'fire',i:'🔥',n:'Fire'},{id:'wind',i:'💨',n:'Wind'},{id:'birds',i:'🐦',n:'Birds'},{id:'city',i:'🏙️',n:'City'},{id:'cafe',i:'☕',n:'Café'},{id:'thunder',i:'⛈️',n:'Thunder'}];
+function getAC(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function initSounds(){const g=document.getElementById('sGrid');if(g.children.length)return;g.innerHTML=sDefs.map(s=>`<div class="scard2" id="sc-${s.id}" onclick="togS('${s.id}')"><span class="si2">${s.i}</span><div class="sn2">${s.n}</div><div class="ss2">▶ Play</div></div>`).join('');}
+function makeSound(id){const ac=getAC();const buf=ac.createBuffer(1,ac.sampleRate*3,ac.sampleRate);const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;const src=ac.createBufferSource();src.buffer=buf;src.loop=true;const f=ac.createBiquadFilter(),g=ac.createGain();g.gain.value=0.1*masterVol*2;const m={rain:[1200,'bandpass'],ocean:[300,'lowpass'],forest:[700,'bandpass'],birds:[2200,'bandpass'],fire:[180,'lowpass'],wind:[120,'lowpass'],city:[800,'bandpass'],cafe:[600,'bandpass'],thunder:[100,'lowpass'],lofi:[350,'lowpass']};const[fr,tp]=m[id]||[400,'lowpass'];f.type=tp;f.frequency.value=fr;src.connect(f);f.connect(g);g.connect(ac.destination);src.start();return{stop:()=>{try{src.stop();}catch(e){}},gain:g};}
+function togS(id){if(activeSounds[id]){activeSounds[id].stop();delete activeSounds[id];document.getElementById('sc-'+id)?.classList.remove('on');const el=document.getElementById('sc-'+id)?.querySelector('.ss2');if(el)el.textContent='▶ Play';}else{try{activeSounds[id]=makeSound(id);document.getElementById('sc-'+id)?.classList.add('on');const el=document.getElementById('sc-'+id)?.querySelector('.ss2');if(el)el.textContent='🔊 On';}catch(e){toast('Allow audio!');}}}
+function setVol(v){masterVol=v/100;Object.values(activeSounds).forEach(s=>{if(s.gain)s.gain.gain.value=0.1*masterVol*2;});}
+ 
+// ══════ BUBBLE ══════
+let bInt2,bCnt=0,bOn=false;
+const bCols=['#ff006e','#8338ec','#3a86ff','#06ffa5','#ffbe0b','#fb5607'];
+function startBub(){stopBub();bCnt=0;bOn=true;document.getElementById('bsc').textContent='0';document.getElementById('bst').style.display='none';bInt2=setInterval(spawnBub,+document.getElementById('bdiff').value);}
+function stopBub(){bOn=false;clearInterval(bInt2);document.querySelectorAll('.bub').forEach(b=>b.remove());}
+function spawnBub(){const a=document.getElementById('ba');if(!a)return;const sz=26+Math.random()*36;const b=document.createElement('div');b.className='bub';const col=bCols[Math.floor(Math.random()*bCols.length)];b.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*(a.offsetWidth-sz)}px;bottom:-${sz}px;background:radial-gradient(circle at 35% 35%,rgba(255,255,255,.6),${col});animation-duration:${1.5+Math.random()*2.5}s;box-shadow:0 0 8px ${col}80;`;b.textContent=['💫','⭐','✨','❤️','💜'][Math.floor(Math.random()*5)];b.onclick=e=>{e.stopPropagation();b.classList.add('popa');bCnt++;document.getElementById('bsc').textContent=bCnt;addXP(1);if(bCnt%20===0){toast(`🫧 ${bCnt} pops!`);confetti();}setTimeout(()=>b.remove(),300);};b.addEventListener('animationend',e=>{if(e.animationName==='fup')b.remove();});a.appendChild(b);}
+ 
+// ══════ MEMORY ══════
+const mEmj=['🌈','🦄','🎮','🍕','🚀','🎸','🌺','🦋'];let mFlip=[],mMat=0,mMov=0,mLk=false;
+function initMem(){mMat=0;mMov=0;mFlip=[];mLk=false;document.getElementById('mmsc').textContent='Moves: 0';const cards=[...mEmj,...mEmj].sort(()=>Math.random()-.5);document.getElementById('mg2').innerHTML=cards.map((e,i)=>`<div class="mc2" data-e="${e}" onclick="flipM2(this)"><div class="mbk">?</div><div class="mf2">${e}</div></div>`).join('');}
+function flipM2(el){if(mLk||el.classList.contains('flip')||el.classList.contains('mat'))return;el.classList.add('flip');mFlip.push(el);if(mFlip.length===2){mMov++;document.getElementById('mmsc').textContent=`Moves: ${mMov}`;mLk=true;setTimeout(()=>{if(mFlip[0].dataset.e===mFlip[1].dataset.e){mFlip.forEach(c=>c.classList.add('mat'));mMat++;addXP(5);if(mMat===8){toast(`🎉 Done in ${mMov}!`);addXP(20);confetti();}}else mFlip.forEach(c=>c.classList.remove('flip'));mFlip=[];mLk=false;},580);}}
+ 
+// ══════ BREATHE ══════
+let brT=null,brPh=0;const brPhs=[{n:'Breathe In',d:4000,s:1.5,c:'#3a86ff,#06ffa5'},{n:'Hold',d:2000,s:1.5,c:'#8338ec,#3a86ff'},{n:'Breathe Out',d:6000,s:1,c:'#ff006e,#8338ec'},{n:'Hold',d:2000,s:1,c:'#ffbe0b,#fb5607'}];
+function startBr(){stopBr();brPh=0;runBr();}
+function runBr(){const p=brPhs[brPh%4],c=document.getElementById('bc2'),t=document.getElementById('btxt'),f=document.getElementById('bf2');t.textContent=p.n;c.style.transform=`scale(${p.s})`;c.style.background=`radial-gradient(circle,${p.c})`;c.style.boxShadow=`0 0 32px ${p.s>1?'var(--g3)':'var(--g1)'}`;f.style.transition=`width ${p.d}ms linear`;f.style.width='100%';setTimeout(()=>f.style.width='0%',80);brT=setTimeout(()=>{brPh++;runBr();},p.d);}
+function stopBr(){if(brT)clearTimeout(brT);const c=document.getElementById('bc2');if(c){c.style.transform='scale(1)';c.textContent='Tap Start';document.getElementById('btxt').textContent='';document.getElementById('bf2').style.width='0%';}}
+ 
+// ══════ WORD ══════
+const wordList=[{w:'HAPPY',h:'Opposite of sad'},{w:'VIBE',h:'Good energy'},{w:'CHILL',h:'Relaxed'},{w:'PEACE',h:'No stress'},{w:'SMILE',h:'Happy face'},{w:'MUSIC',h:'Beautiful sounds'},{w:'BRAVE',h:'Not afraid'},{w:'BLOOM',h:'What flowers do'},{w:'SPARK',h:'Small fire'},{w:'MAGIC',h:'Wonder'},{w:'DANCE',h:'Move to music'},{w:'DREAM',h:'Night visions'}];
+let cW2,gsd=[],wSc=0,wHnts=0;
+function initWrd(){wSc=0;document.getElementById('wsc').textContent='0';nxtW();}
+function nxtW(){cW2=wordList[Math.floor(Math.random()*wordList.length)];gsd=new Array(cW2.w.length).fill(false);wHnts=0;renderWD();document.getElementById('wHint').textContent='💡 '+cW2.h;document.getElementById('lgrd').innerHTML='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l=>`<button class="lbtn2" onclick="guessL('${l}',this)">${l}</button>`).join('');}
+function renderWD(){document.getElementById('wdsp').textContent=cW2.w.split('').map((l,i)=>gsd[i]?l:'_').join(' ');}
+function guessL(l,btn){btn.disabled=true;let f=false;cW2.w.split('').forEach((c,i)=>{if(c===l){gsd[i]=true;f=true;}});renderWD();if(!f){btn.style.color='var(--n1)';return;}btn.style.color='var(--n4)';if(gsd.every(Boolean)){const pts=10-wHnts*3;wSc+=Math.max(pts,1);document.getElementById('wsc').textContent=wSc;addXP(Math.max(pts,1));confetti();toast(`🎉 +${Math.max(pts,1)} XP!`);setTimeout(nxtW,1300);}}
+function wHnt(){const h=gsd.map((g,i)=>g?null:i).filter(i=>i!==null);if(!h.length)return;gsd[h[Math.floor(Math.random()*h.length)]]=true;wHnts++;renderWD();}
+ 
+// ══════ CLICKER ══════
+let clks=0,coins=0,cp=1,aClkI=null;
+function doClk(){clks+=cp;coins+=cp;document.getElementById('cclk2').textContent=clks;document.getElementById('coins2').textContent='💰 '+coins;const b=document.getElementById('cb2');b.style.transform='scale(.88)';setTimeout(()=>b.style.transform='',100);if(clks%50===0){toast(['😤 Stress leaving!','💪 Unstoppable!','🔥 GO!','😂 Click!'][Math.floor(Math.random()*4)]);confetti();}}
+function buyU(id){const cs=[0,10,25,50];if(coins<cs[id]){toast('Need more coins!');return;}coins-=cs[id];document.getElementById('coins2').textContent='💰 '+coins;if(id===1)cp*=2;else if(id===2){if(aClkI)clearInterval(aClkI);aClkI=setInterval(()=>{clks++;coins++;document.getElementById('cclk2').textContent=clks;document.getElementById('coins2').textContent='💰 '+coins;},600);}else if(id===3)cp+=5;document.getElementById('u'+id).disabled=true;addXP(5);toast(['','💪 x2!','🤖 Auto!','⚡ Mega!'][id]);}
+ 
+// ══════ SNAKE ══════
+let snCtx,snTmr,snake,snDir,snFood,snSc,snOn=false;const CELL=20,COLS=14;
+function startSn(){stopSn();const c=document.getElementById('snc');c.width=COLS*CELL;c.height=COLS*CELL;snCtx=c.getContext('2d');snake=[{x:7,y:7},{x:6,y:7},{x:5,y:7}];snDir={x:1,y:0};snSc=0;document.getElementById('snsc').textContent='0';placeSnF();snOn=true;snTmr=setInterval(moveSn,130);}
+function stopSn(){snOn=false;if(snTmr)clearInterval(snTmr);}
+function placeSnF(){snFood={x:Math.floor(Math.random()*COLS),y:Math.floor(Math.random()*COLS)};}
+function sd(dx,dy){if(dx!==-snDir.x||dy!==-snDir.y)snDir={x:dx,y:dy};}
+function moveSn(){const h={x:snake[0].x+snDir.x,y:snake[0].y+snDir.y};if(h.x<0||h.x>=COLS||h.y<0||h.y>=COLS||snake.some(s=>s.x===h.x&&s.y===h.y)){stopSn();toast(`🐍 Game over! ${snSc}`);return;}snake.unshift(h);if(h.x===snFood.x&&h.y===snFood.y){snSc+=10;document.getElementById('snsc').textContent=snSc;addXP(2);placeSnF();}else snake.pop();drawSn();}
+function drawSn(){const W=COLS*CELL;snCtx.fillStyle='#050510';snCtx.fillRect(0,0,W,W);snCtx.fillStyle='rgba(58,134,255,.04)';for(let x=0;x<COLS;x++)for(let y=0;y<COLS;y++){if((x+y)%2===0)snCtx.fillRect(x*CELL,y*CELL,CELL,CELL);}snake.forEach((s,i)=>{snCtx.fillStyle=i===0?'#06ffa5':'#3a86ff';snCtx.shadowColor=i===0?'#06ffa5':'#3a86ff';snCtx.shadowBlur=7;snCtx.beginPath();snCtx.roundRect(s.x*CELL+1,s.y*CELL+1,CELL-2,CELL-2,3);snCtx.fill();snCtx.shadowBlur=0;});snCtx.font='14px serif';snCtx.fillText('🍎',snFood.x*CELL+2,snFood.y*CELL+CELL-3);}
+document.addEventListener('keydown',e=>{const m={ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0},ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1}};if(m[e.key])sd(m[e.key].x,m[e.key].y);});
+let tx0=0,ty0=0;document.addEventListener('touchstart',e=>{tx0=e.touches[0].clientX;ty0=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',e=>{if(!snOn)return;const dx=e.changedTouches[0].clientX-tx0,dy=e.changedTouches[0].clientY-ty0;Math.abs(dx)>Math.abs(dy)?sd(dx>0?1:-1,0):sd(0,dy>0?1:-1);},{passive:true});
+ 
+// ══════ TRIVIA ══════
+const trivia=[{q:'7 × 8 = ?',o:['54','56','64','48'],a:1},{q:'Red Planet?',o:['Venus','Jupiter','Mars','Saturn'],a:2},{q:'Capital of France?',o:['Rome','Berlin','Madrid','Paris'],a:3},{q:'Plants absorb?',o:['O₂','N₂','CO₂','H₂'],a:2},{q:'Hexagon sides?',o:['5','6','7','8'],a:1},{q:'Fastest land animal?',o:['Lion','Leopard','Cheetah','Horse'],a:2},{q:'Mona Lisa painter?',o:['Picasso','Van Gogh','da Vinci','Raphael'],a:2},{q:'H₂O is?',o:['Salt','Sugar','Water','Acid'],a:2},{q:'Pizza invented in?',o:['France','Greece','Italy','Spain'],a:2},{q:'Red + Blue = ?',o:['Green','Orange','Purple','Brown'],a:2}];
+let trSc=0,trIdx=0,trDone=false;
+function initTrivia(){trSc=0;trIdx=0;document.getElementById('trsc').textContent='0';nxtTr();}
+function nxtTr(){trDone=false;const q=trivia[trIdx%trivia.length];trIdx++;document.getElementById('trq').textContent=q.q;document.getElementById('trop').innerHTML=q.o.map((o,i)=>`<button class="topt" onclick="ansT(${i},${q.a},this)">${o}</button>`).join('');document.getElementById('trnxt').style.display='none';}
+function ansT(i,a,btn){if(trDone)return;trDone=true;document.querySelectorAll('.topt').forEach(b=>b.disabled=true);if(i===a){btn.style.background='rgba(6,255,165,.15)';btn.style.borderColor='var(--n4)';trSc++;document.getElementById('trsc').textContent=trSc;addXP(10);confetti();toast('✅ +10 XP!');}else{btn.style.background='rgba(255,0,110,.15)';btn.style.borderColor='var(--n1)';document.querySelectorAll('.topt')[a].style.borderColor='var(--n4)';toast('❌ Wrong!');}document.getElementById('trnxt').style.display='block';}
+ 
+// ══════ SPIN ══════
+const spI=['🎁 Gift','🎵 Music','😂 Joke','🫧 Bubbles','🎨 Doodle','🌬️ Breathe','🤩 You rock!','🍕 Snack','💃 Dance','😴 Nap','🏆 Winner','🔥 Fire'];const spC=['#ff006e','#8338ec','#3a86ff','#06ffa5','#ffbe0b','#fb5607','#ff006e','#8338ec','#3a86ff','#06ffa5','#ffbe0b','#fb5607'];let spAng=0,spRun=false;
+function initSpin(){drawSpin(0);}
+function drawSpin(a){const c=document.getElementById('spinc');if(!c)return;const ctx=c.getContext('2d'),cx=c.width/2,cy=c.height/2,r=cx-14;ctx.clearRect(0,0,c.width,c.height);const sl=2*Math.PI/spI.length;spI.forEach((item,i)=>{const s=a+i*sl,en=s+sl;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,en);ctx.closePath();ctx.fillStyle=spC[i];ctx.fill();ctx.strokeStyle='rgba(0,0,0,.25)';ctx.lineWidth=1;ctx.stroke();ctx.save();ctx.translate(cx,cy);ctx.rotate(s+sl/2);ctx.textAlign='right';ctx.fillStyle='#fff';ctx.font='bold 9px Nunito';ctx.fillText(item.split(' ')[0],r-7,4);ctx.restore();});ctx.beginPath();ctx.arc(cx,cy,13,0,2*Math.PI);ctx.fillStyle='#050510';ctx.fill();ctx.beginPath();ctx.moveTo(cx+r,cy);ctx.lineTo(cx+r+11,cy-7);ctx.lineTo(cx+r+11,cy+7);ctx.closePath();ctx.fillStyle='#ffbe0b';ctx.fill();}
+function doSpin(){if(spRun)return;spRun=true;document.getElementById('spbtn').disabled=true;const extra=(5+Math.floor(Math.random()*8))*2*Math.PI,dur=3000,start=performance.now(),sa=spAng;const anim=now=>{const t=Math.min((now-start)/dur,1),ease=1-Math.pow(1-t,4);spAng=sa+extra*ease;drawSpin(spAng);if(t<1)requestAnimationFrame(anim);else{spRun=false;document.getElementById('spbtn').disabled=false;const norm=(-(spAng%(2*Math.PI))+2*Math.PI)%(2*Math.PI);const idx=Math.floor(norm/(2*Math.PI/spI.length))%spI.length;const res=spI[(spI.length-idx)%spI.length];document.getElementById('spres').textContent='✨ '+res;toast('🎡 '+res);addXP(3);confetti();}};requestAnimationFrame(anim);}
+ 
+// ══════ FLAPPY BIRD ══════
+let fCtx,fReq,fBird,fPipes,fSc2,fOn=false,fStarted=false;
+function startFlap(){
+  stopFlap();const c=document.getElementById('flapc');if(!c)return;
+  fCtx=c.getContext('2d');fBird={y:180,v:0};fPipes=[];fSc2=0;fOn=true;fStarted=false;
+  document.getElementById('flapsc').textContent='0';
+  c.onclick=fFlap;document.addEventListener('keydown',fKey);
+  drawFlap();toast('Tap or Space to flap! 🐦');
+}
+function stopFlap(){fOn=false;if(fReq)cancelAnimationFrame(fReq);const c=document.getElementById('flapc');if(c)c.onclick=null;document.removeEventListener('keydown',fKey);}
+function fKey(e){if(e.code==='Space')fFlap();}
+function fFlap(){if(!fStarted){fStarted=true;fLoop();}fBird.v=-5;}
+let fLast=0;
+function fLoop(ts=0){if(!fOn)return;if(ts-fLast>16){fLast=ts;fBird.v+=0.28;fBird.y+=fBird.v;if(fStarted&&(ts%90<17)){fPipes.push({x:280,gap:Math.floor(80+Math.random()*80),top:Math.floor(40+Math.random()*140)});}fPipes.forEach(p=>p.x-=2);fPipes=fPipes.filter(p=>p.x>-50);const dead=fBird.y<0||fBird.y>360||fPipes.some(p=>{const bx=60,by=fBird.y;const inX=bx+12>p.x&&bx-12<p.x+40;const inY=by-12<p.top||by+12>p.top+p.gap;return inX&&inY;});if(dead){fOn=false;toast(`🐦 Game Over! Score: ${fSc2}`);drawFlap();return;}const passed=fPipes.filter(p=>p.x+40<60&&!p.scored);passed.forEach(p=>{p.scored=true;fSc2++;document.getElementById('flapsc').textContent=fSc2;addXP(5);});drawFlap();}fReq=requestAnimationFrame(fLoop);}
+function drawFlap(){const c=document.getElementById('flapc');if(!c||!fCtx)return;const W=c.width,H=c.height;fCtx.fillStyle='#0a1628';fCtx.fillRect(0,0,W,H);fCtx.fillStyle='rgba(58,134,255,.06)';for(let i=0;i<W;i+=30)for(let j=0;j<H;j+=30)if((i/30+j/30)%2===0)fCtx.fillRect(i,j,30,30);fPipes.forEach(p=>{fCtx.fillStyle='#06ffa5';fCtx.shadowColor='#06ffa5';fCtx.shadowBlur=10;fCtx.fillRect(p.x,0,40,p.top);fCtx.fillRect(p.x,p.top+p.gap,40,H-p.top-p.gap);fCtx.shadowBlur=0;});fCtx.font='24px serif';fCtx.fillText('🐦',60-12,fBird.y+8);if(!fStarted){fCtx.fillStyle='rgba(255,255,255,.5)';fCtx.font='bold 13px Nunito';fCtx.textAlign='center';fCtx.fillText('Tap to start!',W/2,H/2);fCtx.textAlign='left';}}
+ 
+// ══════ DINO RUN ══════
+let dCtx,dReq,dDino,dObs,dSc3,dOn=false,dSpeed=3;
+function startDino(){
+  stopDino();const c=document.getElementById('dinoc');if(!c)return;
+  dCtx=c.getContext('2d');dDino={y:110,v:0,onGround:true};dObs=[];dSc3=0;dSpeed=3;dOn=true;
+  document.getElementById('dinosc').textContent='0';
+  c.onclick=dJump;document.addEventListener('keydown',dKey2);
+  dLoop();
+}
+function stopDino(){dOn=false;if(dReq)cancelAnimationFrame(dReq);const c=document.getElementById('dinoc');if(c)c.onclick=null;document.removeEventListener('keydown',dKey2);}
+function dKey2(e){if(e.code==='Space')dJump();}
+function dJump(){if(dDino&&dDino.onGround){dDino.v=-8;dDino.onGround=false;}}
+let dLast2=0,dObTimer=0;
+function dLoop(ts=0){if(!dOn)return;if(ts-dLast2>16){dLast2=ts;dDino.v+=0.5;dDino.y+=dDino.v;if(dDino.y>=110){dDino.y=110;dDino.v=0;dDino.onGround=true;}dObTimer++;if(dObTimer>60){dObTimer=0;if(Math.random()>.4)dObs.push({x:320,w:16,h:30+Math.floor(Math.random()*24)});}dObs.forEach(o=>o.x-=dSpeed);dObs=dObs.filter(o=>o.x>-20);const dead=dObs.some(o=>60+14>o.x&&60-14<o.x+o.w&&dDino.y+14>160-o.h);if(dead){dOn=false;toast(`🦕 Game over! Score: ${dSc3}`);drawDino();return;}dSc3++;if(dSc3%100===0)dSpeed+=.3;document.getElementById('dinosc').textContent=dSc3;drawDino();}dReq=requestAnimationFrame(dLoop);}
+function drawDino(){const c=document.getElementById('dinoc');if(!c||!dCtx)return;const W=c.width,H=c.height;dCtx.fillStyle='#0a1628';dCtx.fillRect(0,0,W,H);dCtx.fillStyle='rgba(6,255,165,.3)';dCtx.fillRect(0,H-20,W,20);dCtx.fillStyle='rgba(6,255,165,.15)';dCtx.fillRect(0,H-22,W,2);dObs.forEach(o=>{dCtx.fillStyle='#ff006e';dCtx.shadowColor='#ff006e';dCtx.shadowBlur=8;dCtx.fillRect(o.x,H-20-o.h,o.w,o.h);dCtx.shadowBlur=0;});dCtx.font='22px serif';dCtx.fillText('🦕',46,dDino.y+20);if(!dOn&&dSc3===0){dCtx.fillStyle='rgba(255,255,255,.4)';dCtx.font='bold 12px Nunito';dCtx.textAlign='center';dCtx.fillText('Tap to start!',W/2,H/2);dCtx.textAlign='left';}}
+ 
+// ══════ POMODORO ══════
+let pMode='focus',pTime=1500,pTotal=1500,pTimer=null,pPsd=true,pCnt2=0;
+function setP(m,mins){pReset();pMode=m;pTime=mins*60;pTotal=mins*60;document.getElementById('pd2').textContent=fmt(pTime);document.getElementById('ps2').textContent=m==='focus'?'Focus':m==='short'?'Short Break':'Long Break';}
+function fmt(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;}
+function pStart(){if(!pPsd)return;pPsd=false;document.getElementById('plbl2').textContent='Focusing 🧠';pTimer=setInterval(()=>{if(pPsd)return;pTime--;document.getElementById('pd2').textContent=fmt(pTime);document.getElementById('pp2').style.strokeDashoffset=(377*(1-pTime/pTotal));if(pTime<=0){clearInterval(pTimer);pPsd=true;pCnt2++;document.getElementById('pcnt2').textContent=pCnt2;addXP(pMode==='focus'?20:5);confetti();earnedBadges.add('focuser');save();toast(pMode==='focus'?'🎉 Focus done!':'☕ Break over!');}},1000);}
+function pPause(){pPsd=!pPsd;document.getElementById('plbl2').textContent=pPsd?'Paused ⏸':'Focusing 🧠';}
+function pReset(){clearInterval(pTimer);pPsd=true;pTime=pTotal;document.getElementById('pd2').textContent=fmt(pTime);document.getElementById('pp2').style.strokeDashoffset='0';document.getElementById('plbl2').textContent='Ready 🧠';}
+ 
+// ══════ CHAT ══════
+const botNames=['Priya✨','RaviXP','KaranVZ','Sneha🌈','Dev🔥'];
+const botMsgs=['Feeling so relaxed after the breathing game!','Just popped 100 bubbles 🫧🔥','VibeZone is the best app ever 💯','Hey everyone! How\'s your mood today?','Just hit Level 5! 🎉','This app is literally saving me from stress 😭','Who else is doing the Pomodoro timer? 🍅','My habit streak is 10 days now! 🔥'];
+function renderChat(){
+  if(!chatMsgs.length){for(let i=0;i<4;i++){chatMsgs.push({name:botNames[Math.floor(Math.random()*botNames.length)],text:botMsgs[Math.floor(Math.random()*botMsgs.length)],t:new Date(Date.now()-Math.random()*3600000).toLocaleTimeString(),me:false});}}
+  const wrap=document.getElementById('chatWrap');
+  wrap.innerHTML=chatMsgs.map(m=>`<div class="msg ${m.me?'me':'them'}">
+    ${!m.me?`<div class="msg-sender">${m.name}</div>`:''}
+    ${m.text}
+    <div class="msg-time">${m.t}</div>
+  </div>`).join('');
+  wrap.scrollTop=wrap.scrollHeight;
+  renderFriends();
+}
+function renderFriends(){
+  document.getElementById('friendList').innerHTML=botNames.map(n=>`<div class="friend-row" onclick="toast('Chat with ${n} coming in v6! 🚀')">
+    <div class="friend-av">${n[0]}</div>
+    <div style="flex:1;"><div style="font-weight:800;font-size:.82rem;">${n}</div><div style="font-size:.65rem;color:var(--sub);">Online</div></div>
+    <div class="online-dot"></div>
+  </div>`).join('');
+}
+function sendMsg(){
+  const inp=document.getElementById('msgInp');const txt=inp.value.trim();if(!txt)return;
+  chatMsgs.push({name:userName,text:txt,t:new Date().toLocaleTimeString(),me:true});
+  inp.value='';renderChat();addXP(2);earnedBadges.add('chat1');save();
+  // bot reply
+  setTimeout(()=>{chatMsgs.push({name:botNames[Math.floor(Math.random()*botNames.length)],text:botMsgs[Math.floor(Math.random()*botMsgs.length)],t:new Date().toLocaleTimeString(),me:false});renderChat();},1200+Math.random()*2000);
+}
+ 
+// ══════ LEADERBOARD ══════
+if(!leaderboard.length){leaderboard=[{name:'Priya✨',av:'✨',pts:840,bdg:'👑'},{name:'RaviXP',av:'🔥',pts:720,bdg:'⭐'},{name:'KaranVZ',av:'⚡',pts:650,bdg:'🎮'},{name:'Sneha🌈',av:'🌈',pts:580,bdg:'💎'},{name:'Dev🔥',av:'💪',pts:490,bdg:'🏅'}];}
+function addToLB(){const nm=document.getElementById('lbNm').value.trim();if(!nm)return;leaderboard=leaderboard.filter(e=>e.name!==nm);leaderboard.push({name:nm,av:userAvatar,pts:xp+lvl*100,bdg:'🆕'});leaderboard.sort((a,b)=>b.pts-a.pts);save();renderLB();toast('🏆 Added to leaderboard!');}
+function renderLB(){
+  const mdl=['🥇','🥈','🥉'];
+  const myName=userName;
+  document.getElementById('lbList').innerHTML=leaderboard.slice(0,10).map((e,i)=>`<div class="lb-row ${e.name===myName?'me-row':''}">
+    <div class="lb-rank">${mdl[i]||'#'+(i+1)}</div>
+    <div class="lb-av">${e.av}</div>
+    <div class="lb-name">${e.name} ${e.name===myName?'← You':''}</div>
+    <div class="lb-pts">${e.pts}</div>
+    <div class="lb-badge">${e.bdg||''}</div>
+  </div>`).join('');
+}
+ 
+// ══════ WEATHER TIP ══════
+function initWeatherTip(){const tips=[{i:'☀️',t:'Sunny vibes! Take a walk & log your mood.',s:'Sunlight = +serotonin 🌿'},{i:'🌧️',t:'Rainy day? Perfect for sounds + doodle session.',s:'Rain = focus energy'},{i:'🌤️',t:'Nice weather — great for a focus session!',s:'Mild temp = peak concentration'},{i:'❄️',t:'Cold outside? Cozy sounds + habit tracking.',s:'Indoor time = habit building'},{i:'⛈️',t:'Stormy? Try breathing game first 🌬️',s:'Breath control = calm mind'}];const tip=tips[Math.floor(Math.random()*tips.length)];document.getElementById('qtT').textContent&&(document.querySelector('.qtbox')&&null);}
+ 
+// ══════ ROADMAP ══════
+const roadmap=[
+  {phase:'🔨 Phase 1',color:'var(--n5)',items:[{i:'📱',t:'Android & iOS App',d:'Expo / React Native — publish on Play Store & App Store',tag:'React Native'},{i:'💾',t:'Offline Storage',d:'AsyncStorage saves XP, habits, mood log permanently',tag:'AsyncStorage'},{i:'🔔',t:'Smart Notifications',d:'Daily habit nudges, mood check-ins, sleep reminders',tag:'Firebase FCM'},{i:'🌙',t:'Auto Light/Dark Mode',d:'System theme detection + manual override',tag:'CSS/RN Appearance'}]},
+  {phase:'💡 Phase 2',color:'var(--n2)',items:[{i:'🤖',t:'AI Mood Coach',d:'"You\'ve been stressed 4 days — try breathing or a walk 🌿"',tag:'Gemini API'},{i:'👥',t:'Real Multiplayer',d:'Trivia & Word Puzzle with friends via room codes',tag:'Socket.io'},{i:'📊',t:'Analytics Dashboard',d:'Weekly mood graphs, habit completion rates, sleep trends',tag:'Recharts'},{i:'🎨',t:'AI Doodle → Art',d:'Sketch anything → AI transforms it to stunning artwork',tag:'Stable Diffusion'}]},
+  {phase:'🌐 Phase 3',color:'var(--n3)',items:[{i:'🌍',t:'vibezone.app Live',d:'Full web platform, sync across devices, Google login',tag:'Next.js + Supabase'},{i:'💎',t:'VibeZone Premium',d:'Free forever + premium: AI coach, exclusive games, storage',tag:'Razorpay / Stripe'},{i:'🌐',t:'Indian Languages',d:'Hindi, Marathi, Tamil, Telugu — for 1B+ Indian users',tag:'i18n'},{i:'🧘',t:'Therapy Integration',d:'Book 15-min sessions with certified therapists in-app',tag:'iCall / YourDOST'}]},
+];
+function renderRoadmap(){document.getElementById('roadmapItems').innerHTML=roadmap.map(p=>`<div style="margin-bottom:18px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div style="padding:3px 12px;border-radius:50px;font-family:'Fredoka One',cursive;font-size:.76rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:${p.color};">${p.phase}</div><div style="flex:1;height:1px;background:var(--border);"></div></div>${p.items.map(it=>`<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:11px 13px;display:flex;align-items:flex-start;gap:9px;margin-bottom:6px;transition:all .2s;" onmouseover="this.style.borderColor='rgba(255,255,255,.13)';this.style.transform='translateX(3px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform=''"><div style="font-size:1.6rem;flex-shrink:0;">${it.i}</div><div><div style="font-weight:800;font-size:.84rem;margin-bottom:2px;">${it.t}</div><div style="font-size:.72rem;color:var(--sub);line-height:1.5;">${it.d}</div><span style="display:inline-block;padding:2px 8px;border-radius:50px;font-size:.6rem;font-weight:800;background:rgba(255,255,255,.06);color:${p.color};margin-top:4px;">${it.tag}</span></div></div>`).join('')}</div>`).join('');}
+ 
+// ══════ INIT RENDERS ══════
+document.getElementById('strkV').textContent=streak;
+document.getElementById('bdgCnt').textContent=earnedBadges.size;
+renderHabits();renderSleepLog();renderFitness();renderReminders();
+</script>
+</body>
+</html>
